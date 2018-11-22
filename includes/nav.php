@@ -7,11 +7,11 @@
       </button>
 
       <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="/metier/rechercher.php" method="get">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">
+          <input type="text" name="recherche" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="formulaire-de-recherche">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
+            <button class="btn btn-primary" type="submit">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -25,10 +25,9 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Activity Log</a>
+            <a class="dropdown-item" href="#">Paramètres</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Déconnexion</a>
           </div>
         </li>
       </ul>

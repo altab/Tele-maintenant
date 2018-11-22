@@ -1,9 +1,9 @@
 <?php
 /**
- * Gestion du dashboard - Opreations de traitement
+ * Gestion des tickets - Opreations de traitement
  * @author Philippe Cohen
  */
-$sectionSubject = "Accueil";
+$sectionSubject = "Nouveau";
 
 
 
