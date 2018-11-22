@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="index.php">Télé-Maintenant</a>
+      <a class="navbar-brand mr-1" href="/index.php"><i class="fas fa-user-edit"></i> Télé-Maintenant</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -27,7 +27,9 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="#">Paramètres</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Déconnexion</a>
+            <form action="/metier/login.php" method="get">
+				<input class="dropdown-item" type="submit" name="quitter" value="Deconnexion" data-toggle="modal" data-target="#logoutModal">
+			</form>
           </div>
         </li>
       </ul>
