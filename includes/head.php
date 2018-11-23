@@ -15,3 +15,6 @@
 
     <!-- Custom styles for this template-->
     <link href="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>css/sb-admin.css" rel="stylesheet">
+    
+    <!-- Custom styles by philippe Cohen-->
+    <link href="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>css/styles.css" rel="stylesheet">
