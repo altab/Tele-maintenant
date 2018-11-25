@@ -73,7 +73,7 @@
         					<div class="row">
         						<label class="col-4 col-form-label" for="nom"> Nom :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listeNom" id="nom"  name="nomInterlocuteur" >
+                                   	<input class="form-control" list="listeNom" id="nom"  name="nomInterlocuteur" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getNom()."'"; ?>>
                                    	  	<datalist id="listeNom">
                                           <?php foreach ($interlocuteurs as $interlocuteur) {
                                              echo "<option value='".$interlocuteur -> getNom()."' label='".$interlocuteur -> getNom()."'></option>\n";
@@ -85,7 +85,7 @@
         					<div class="row my-2">
         						<label class="col-4 col-form-label" for="prenom"> Prénom :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listePrenom" id="prenom"  name="prenomInterlocuteur" >
+                                   	<input class="form-control" list="listePrenom" id="prenom"  name="prenomInterlocuteur" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getPrenom()."'"; ?>>
                                    	  	<datalist id="listePrenom">
                                           <?php foreach ($interlocuteurs as $interlocuteur) {
                                               echo "<option value='".$interlocuteur-> getPrenom()."' label='".$interlocuteur-> getPrenom()."'></option>\n";
@@ -97,7 +97,7 @@
         					<div class="row my-2">
         						<label class="col-4 col-form-label" for="telephone" > Téléphone :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listeTelephone" id="telephone" name="telephone">
+                                   	<input class="form-control" list="listeTelephone" id="telephone" name="telephone" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getTelephone()."'"; ?>>
                                    	<datalist id="listeTelephone">
                                       <?php foreach ($interlocuteurs as $interlocuteur) {
                                               echo "<option value='".$interlocuteur-> getTelephone()."' label='".$interlocuteur-> getTelephone()."'></option>\n";
@@ -109,7 +109,7 @@
         					<div class="row">
         						<label class="col-4 col-form-label" for="email" > Email :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listeEmail" id="email" name="email">
+                                   	<input class="form-control" list="listeEmail" id="email" name="email"<?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getEmail()."'"; ?>>
                                    	<datalist id="listeEmail">
                                       <?php foreach ($interlocuteurs as $interlocuteur) {
                                               echo "<option value='".$interlocuteur-> getEmail()."' label='".$interlocuteur-> getEmail()."'></option>\n";

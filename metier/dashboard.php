@@ -28,7 +28,7 @@ $societes = $connexion->selectFromWhere('*','societe','', '');
 
 
 $interlocuteurs=null;
-
+$societeEnCours;
 
 
 if (isset($_POST['societe']) && $_POST['societe'] != '') {
@@ -52,9 +52,16 @@ if (isset($_POST['societe']) && $_POST['societe'] != '') {
 } 
 elseif (isset($_POST['nomInterlocuteur']) && $_POST['nomInterlocuteur'] != '') {
     
+    $societeEnCours = $_POST['societeEnCours'];
     
-    var_dump($_POST);
-    echo "\n";
+    $societeID = $connexion->selectFromWhere('*','societe','nom', $societeEnCours);
+    
+    $nom = $_POST['nomInterlocuteur'];
+    $socID = $societeID[0]['id'];
+    $tabInterlocuteurs =  $connexion->selectFromWhereAnd('*', 'interlocuteur', 'nom', $nom, 'societeID', $socID);
+    
+    $interlocuteurEnCours = new Interlocuteur($tabInterlocuteurs[0]['id'], $tabInterlocuteurs[0]['nom'], $tabInterlocuteurs[0]['prenom'], $tabInterlocuteurs[0]['telephone'], $tabInterlocuteurs[0]['email'], $tabInterlocuteurs[0]['societeID']);
+
 }
 
 $connexion = null; //fermetur de la connexion

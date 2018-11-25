@@ -115,5 +115,39 @@ class connectDB {
         
     }
     
+    /**
+     * selectFromWhereAnd($element,$table,$whereEl, $whereVal, $whereElAnd, $whereValAnd)
+     * @param  $element
+     * @param  $table
+     * @param  $whereEl
+     * @param  $whereVal
+     * @param  $whereElAnd
+     * @param  $whereValAnd
+     * @return array
+     */
+    function selectFromWhereAnd($element,$table,$whereEl, $whereVal, $whereElAnd, $whereValAnd) {
+        
+        if((isset($whereElAnd) && $whereElAnd != '') && (isset($whereValAnd) && $whereValAnd != '')) {
+            $where = " WHERE ".$whereEl."='".$whereVal."' ";
+            $where .= " AND $whereElAnd='".$whereValAnd."' ";
+        } else $where = '';
+        
+        $pdo =  $this -> getConn();
+        
+        $query = "SELECT ".$element." FROM ".$table.$where;
+        
+        $reponse = $pdo->query($query);
+        
+        $reponses = NULL;
+        while($message = $reponse->fetch()) {
+            
+            $reponses[] = $message;
+            
+        }
+        
+        return $reponses;
+        
+    }
+    
 }
 ?>
