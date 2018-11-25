@@ -29,7 +29,7 @@ function sessionDestroy()
 function VerifLogin($login, $password)
 {
     $connexion = new connectDB();
-    $utilisateurs = $connexion->afficherUtilisateurs();
+    $utilisateurs = $connexion->selectFromWhere('*','users','','');
 
     foreach ($utilisateurs as $utilisateur) {
 
@@ -44,6 +44,7 @@ function VerifLogin($login, $password)
 //                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/metier/login.php");
          }
     }
+    $connexion = null; //fermeture de la connexion
 }
 
 require_once '../vues/vLogin.php';

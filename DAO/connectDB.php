@@ -70,26 +70,6 @@ class connectDB {
         
 //     }
     
-    /**
-     * Affiche l'ensemble des enregistrments de la table
-     * @return NULL|mixed
-     */
-    function afficherTous() {
-       
-        $pdo =  $this -> getConn();
-        
-        $reponse = $pdo->query('SELECT * FROM tickets');
-        
-        $reponses = NULL;
-        while($message = $reponse->fetch()) {
-            
-            $reponses[]=$message;
-            
-        }
-        
-        return $reponses;
-        
-    }
     
 //     /**
 //      * Liste des enregistrements à supprimer
@@ -106,19 +86,28 @@ class connectDB {
 //     }
     
     /**
-     * Liste des utilisateurs de l'application
-     * @return array[]
+     * Execute une requete SELECT simple <br>
+     * selectFromWhere($element,$table,$whereEl, $whereVal)
+     * @param  $element (required)
+     * @param  $table (required)
+     * @param  $whereEl (optional)
+     * @param  $whereVal (optional)
+     * @return array
      */
-    function afficherUtilisateurs() {
+    function selectFromWhere($element,$table,$whereEl, $whereVal) {
+                
+        if((isset($whereEl) && $whereEl != '') && (isset($whereVal) && $whereVal != '')) $where = " WHERE ".$whereEl."='".$whereVal."'";
+        else $where = '';
         
         $pdo =  $this -> getConn();
         
-        $reponse = $pdo->query('SELECT * FROM users');
+        $query = "SELECT ".$element." FROM ".$table.$where;
+        $reponse = $pdo->query($query);
         
         $reponses = NULL;
         while($message = $reponse->fetch()) {
             
-            $reponses[]=$message;
+            $reponses[] = $message;
             
         }
         

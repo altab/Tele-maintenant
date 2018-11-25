@@ -29,34 +29,34 @@
             	<div class="col-6">
             	
             	<div class="card h-100">
-  					<h5 class="card-header  bg-primary text-white">Société</h5>
+  					<h5 class="card-header  bg-primary text-white">1 - Recherche Société</h5>
                 	<div class="card-body">
-                            
+                        <form action="/metier/dashboard.php" method="post">
                     	<fieldset>    	
             			<legend>Informations</legend>
         					<div class="row">
         						<label class="col-4 col-form-label" for="societe" > Nom de la société :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="société" id="societe">
-                                   	<datalist id="société">
-                                      <option value="ACME">
-                                      <option value="Neo-Cortex">
-                                      <option value="Morley">
-                                      <option value="Stark Industries">
-                                      <option value="Wayne Entreprises">
-                                    </datalist>
+                               		
+                                       	<input class="form-control" list="listeSociete" id="societe" name="societe" 
+                                       	<?php if(isset($societeEnCours))echo "value=$societeEnCours"; ?>>
+                                       	<datalist id="listeSociete">
+                                          <?php foreach ($societes as $societe) {
+                                              echo "<option value='".$societe['nom']."' label='".$societe['nom']."'></option>\n";
+                                          } ?>
+                                        </datalist>
         						</div>
         					</div>
                 		</fieldset>	
                 		
                 		<div class="row mt-3 d-flex">
     						<div class="col-12">
-    							<input class="btn bg-success float-right text-white" type="submit" value="valider">
+    							<input class="btn bg-success float-right text-white" type="submit" value="Valider">
     							<button class="btn btn-outline-primary mr-3 float-right">Ajouter</button>
     						</div>
     					</div>			
                 		<div class="clearfix"></div>
-                		
+                		</form>
                      </div>
                 </div>
                             	
@@ -64,35 +64,44 @@
             	</div>
             	<div class="col-6">
             		<div class="card h-100">
-  					<h5 class="card-header bg-primary text-white">Interlocuteur</h5>
+  					<h5 class="card-header bg-primary text-white">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo $societeEnCours; ?></h5>
                 	<div class="card-body">
-                            
+                        <form action="/metier/dashboard.php" method="post">
+                         <?php if(isset($societeEnCours))echo "<input type='hidden' value='$societeEnCours' name='societeEnCours'/>"; ?> 
                     	<fieldset>    	
             			<legend>Informations</legend>
         					<div class="row">
-        						<label class="col-4 col-form-label" for="nom" > Nom :</label>
+        						<label class="col-4 col-form-label" for="nom"> Nom :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="nom" id="nom">
-                                   	<datalist id="nom">
-                                      <option value="Elodie">
-                                      <option value="Marie">
-                                      <option value="Philippe">
-                                      <option value="Sonia">
-                                      <option value="Mathieu">
-                                    </datalist>
+                                   	<input class="form-control" list="listeNom" id="nom"  name="nomInterlocuteur" >
+                                   	  	<datalist id="listeNom">
+                                          <?php foreach ($interlocuteurs as $interlocuteur) {
+                                             echo "<option value='".$interlocuteur -> getNom()."' label='".$interlocuteur -> getNom()."'></option>\n";
+                                          } ?>
+                                        </datalist>
+        						</div>
+        					</div>
+        					
+        					<div class="row my-2">
+        						<label class="col-4 col-form-label" for="prenom"> Prénom :</label>
+                               	<div class="col-8">
+                                   	<input class="form-control" list="listePrenom" id="prenom"  name="prenomInterlocuteur" >
+                                   	  	<datalist id="listePrenom">
+                                          <?php foreach ($interlocuteurs as $interlocuteur) {
+                                              echo "<option value='".$interlocuteur-> getPrenom()."' label='".$interlocuteur-> getPrenom()."'></option>\n";
+                                          } ?>
+                                        </datalist>
         						</div>
         					</div>
         					
         					<div class="row my-2">
         						<label class="col-4 col-form-label" for="telephone" > Téléphone :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="telephone" id="telephone">
-                                   	<datalist id="telephone">
-                                      <option value="0400000000">
-                                      <option value="0632659874">
-                                      <option value="0612345678">
-                                      <option value="0600112233">
-                                      <option value="0611112222">
+                                   	<input class="form-control" list="listeTelephone" id="telephone" name="telephone">
+                                   	<datalist id="listeTelephone">
+                                      <?php foreach ($interlocuteurs as $interlocuteur) {
+                                              echo "<option value='".$interlocuteur-> getTelephone()."' label='".$interlocuteur-> getTelephone()."'></option>\n";
+                                          } ?>
                                     </datalist>
         						</div>
         					</div>
@@ -100,26 +109,26 @@
         					<div class="row">
         						<label class="col-4 col-form-label" for="email" > Email :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="email" id="email">
-                                   	<datalist id="email">
-                                      <option value="elodie@mail.com">
-                                      <option value="marie@mail.com">
-                                      <option value="philippe@mail.com">
-                                      <option value="sonia@mail.com">
-                                      <option value="mathieu@mail.com">
+                                   	<input class="form-control" list="listeEmail" id="email" name="email">
+                                   	<datalist id="listeEmail">
+                                      <?php foreach ($interlocuteurs as $interlocuteur) {
+                                              echo "<option value='".$interlocuteur-> getEmail()."' label='".$interlocuteur-> getEmail()."'></option>\n";
+                                          } ?>
                                     </datalist>
         						</div>
         					</div>
         					
         					
-                		</fieldset>	
+                		</fieldset>
                 		<div class="row mt-3">
     						<div class="col-12">
-    							<input class="btn bg-success float-right text-white" type="submit" value="valider">
+    							<input class="btn bg-success float-right text-white" type="submit" value="Valider">
     							<button class="btn btn-outline-primary mr-3 float-right">Ajouter</button>
     						</div>
     					</div>			
+                		
                 		<div class="clearfix"></div>
+                		</form>
                 		
                      </div>
                 </div>
