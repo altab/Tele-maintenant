@@ -15,7 +15,7 @@
       <div class="card card-login mx-auto mt-5">
         <div class="card-header">Connexion</div>
         <div class="card-body">
-          <form action="/metier/login.php" method="post">
+          <form action="/page/login.php" method="post">
             <div class="form-group">
               <div class="form-label-group">
                 <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">

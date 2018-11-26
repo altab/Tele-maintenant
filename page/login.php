@@ -4,10 +4,13 @@
  *
  * @author Philippe Cohen
  */
-
 require_once '../DAO/connectDB.php';
 
 // recuperation des variables
+if (isset($_SESSION['origine']) && $_SESSION['origine'] != '')
+    $origine = $_SESSION['origine'];
+else $origine = "";
+
 if (isset($_POST['email']) && $_POST['email'] != '')
     $login = htmlentities(urldecode($_POST['email']));
 
@@ -18,7 +21,7 @@ if (isset($_GET['quitter']) && $_GET['quitter'] == 'Deconnexion')
     sessionDestroy();
 
 if (isset($_POST['email']) && $_POST['email'] != '' && isset($_POST['password']) && $_POST['password'] != '')     
-    VerifLogin($login, $password);
+    VerifLogin($login, $password, $origine);
 
 function sessionDestroy()
 {
@@ -26,7 +29,7 @@ function sessionDestroy()
     session_destroy();
 }
 
-function VerifLogin($login, $password)
+function VerifLogin($login, $password, $origine)
 {
     $connexion = new connectDB();
     $utilisateurs = $connexion->selectFromWhere('*','users','','');
@@ -35,11 +38,11 @@ function VerifLogin($login, $password)
 
         if (($utilisateur['email'] == $login) && ($utilisateur['password'] == $password)) { //
             $_SESSION['login'] = $login;
-            
-            header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/" . $_SESSION['origine'] . "");
+            if (isset($origine)) $urlOrigine = $origine; else $urlOrigine = '';
+            header("Location:  http://" . $_SERVER['SERVER_NAME'] . $urlOrigine . "");
         } else {
             if (isset($login))
-                header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/metier/login.php?connexion=ko");
+                header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/page/login.php?connexion=ko");
 //             else
 //                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/metier/login.php");
          }

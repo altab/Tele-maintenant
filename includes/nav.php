@@ -27,7 +27,7 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="#">Paramètres</a>
             <div class="dropdown-divider"></div>
-            <form action="/metier/login.php" method="get">
+            <form action="/page/login.php" method="get">
 				<input class="dropdown-item" type="submit" name="quitter" value="Deconnexion" data-toggle="modal" data-target="#logoutModal">
 			</form>
           </div>

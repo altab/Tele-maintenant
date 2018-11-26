@@ -1,7 +1,7 @@
 <?php
 
 
-class societe {
+class Societe {
     
     private $id,$nom,$adresse,$telephone,$email;
     
