@@ -21,3 +21,7 @@ legend {
 	padding: 5px 5px 5px 10px; 
 	background-color: #ffffff;
 }
+td.align-center { width: 74px;}
+#historique li {
+	list-style-type: square !important;
+}

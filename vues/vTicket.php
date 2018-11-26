@@ -5,7 +5,7 @@
 
 	<?php require_once '../includes/head.php';?>
 
-    <title>Dashboard - Télé-Maintenant</title>
+    <title>Nouveau Ticket - Télé-Maintenant</title>
 
 
   </head>
@@ -64,7 +64,7 @@
             	</div>
             	<div class="col-6">
             		<div class="card h-100">
-  					<h5 class="card-header bg-primary text-white">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo $societeEnCours; ?></h5>
+  					<h5 class="card-header bg-primary text-white">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo ucfirst($societeEnCours); ?></h5>
                 	<div class="card-body">
                         <form action="/page/ticket.php" method="post">
                          <?php if(isset($societeEnCours))echo "<input type='hidden' value='$societeEnCours' name='societeEnCours'/>"; ?> 
@@ -109,7 +109,7 @@
         					<div class="row">
         						<label class="col-4 col-form-label" for="email" > Email :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listeEmail" id="email" name="email"<?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getEmail()."'"; ?>>
+                                   	<input class="form-control" list="listeEmail" id="email" name="email"<?php if(isset($interlocuteurEnCours))echo " value='".$interlocuteurEnCours->getEmail()."'"; ?>>
                                    	<datalist id="listeEmail">
                                       <?php foreach ($interlocuteurs as $interlocuteur) {
                                               echo "<option value='".$interlocuteur-> getEmail()."' label='".$interlocuteur-> getEmail()."'></option>\n";
@@ -137,7 +137,7 @@
             </div>
             
             
-            <?php if(isset($interlocuteurEnCours) && $interlocuteurEnCours!= '') {?>
+            <?php if(isset($interlocuteurEnCours) && $interlocuteurEnCours!= '') { ?>
             <div  class="row">
             	
             	<div class="card m-3 w-100">
@@ -146,38 +146,108 @@
                     <div class="card-body">
                       <div class="table-responsive">
                       <?php if (isset($tabTicketsSociete) && $tabTicketsSociete != '') { ?>
+                      
                        	 <table class="table table-bordered" id="dataTable" >
                           <thead>
                             <tr>
                               <th>ID</th>
+                              <th>Date</th>
                               <th>Sujet</th>
                               <th>Interlocuteur</th>
                               <th>Société</th>
                               <th>Status</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
                              <?php foreach ($tabTicketsSociete as $ticketSociete) { 
-                                 if ($ticketSociete->getStatus() == 0) $status = "Cloturé"; else $status = "En cours"
+                                 if ($ticketSociete->getStatus() == 0) $status = "Cloturé"; else $status = "En cours";
+                                 
                              ?>
+                             <form action="/page/ticket.php#ajouterTicket" method="get">
+                      			<input type="hidden" name="action" value="detailTicket" />
+                      			<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId()?>" />
+                      			<input type="hidden" name="societeID" value="<?php echo $ticketSociete->getSocieteID() ?>" />
+                                <input type="hidden" name="ticketID" value="<?php echo $ticketSociete->getId() ?>" />
                               	<tr>
                                   <td><?php echo $ticketSociete->getId();?></td>
-                                  <td><?php echo $ticketSociete->getSujet();?></td>
+                                  <td><?php echo $ticketSociete->getDate();?></td>
+                                  <td><?php echo ucfirst($ticketSociete->getSujet());?></td>
                                   <td><?php echo $interlocuteurEnCours->getPrenom() ." ".$interlocuteurEnCours->getNom();?></td>
-                                  <td><?php echo $societeEnCours;?></td>
+                                  <td><?php echo $ticketSociete->getSocieteID();?></td>
                                   <td><?php echo $status;?></td>
+                                  <td class="align-center"><button type="submit" class="btn btn-primary text-white float-right"><i class="fas fa-arrow-circle-right"></i></button></td>
                                 </tr>
+                            </form>
                           	 <?php } ?>
                           </tbody>
                         </table>
+                        </form>
                         <?php } else echo "<p class='text-danger text-center'>Aucun ticket pour cet interlocuteur !</p>"; ?>
                       </div>
                     </div>
                 </div>
             
             </div>
-            <?php }?>
             
+            
+            <div  class="row">
+            	
+            	<div class="card m-3 w-100">
+            		
+            	
+                    <div class="card-header" id="ajouterTicket"><i class="fas fa-fw fa-pencil-alt"></i> Ajouter un ticket</div>
+                    	
+                    <div class="card-body form-group">
+                   		<div  class="form-group">
+                        	<form  class="form-inline"  action="/page/ticket.php" method="get">
+                        		<input type="hidden" name="action" value="nouveauTicket">
+                        		<input class="form-control col-10 mr-5" type="text" name="sujet" placeholder="Sujet du ticket" <?php 
+                        		if (isset($sujetEnCours) ) echo " value=\"".ucfirst($sujetEnCours->getSujet())."\" ";
+                        		?>>
+                        		<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId(); ?>">
+                        		<input type="hidden" name="societeID" value="<?php echo recupSocieteIdFromNom($societeEnCours); ?>">
+                        		<input class="btn btn-primary ml-5" type="submit" value="Créer" <?php 
+                        		if (isset($sujetEnCours) ) echo " disabled=\"disabled\"";
+                        		?>>
+                        	</form>
+                    	</div>
+                    	
+                    	<div class="row" id="historique">
+                    	<?php 
+                                    if (isset($detailEnCours)) {
+                                        $index=0;
+                                        foreach ($detailEnCours as $detail) {
+                                            echo "<ul><li><b>".$detail['date']."</b> : ".$detail['info']."\n";
+                                            $index++;
+                                        }
+                                        for ($i = 0; $i < $index; $i++) {
+                                            echo "</li></ul>\n";
+                                        }
+                                    }
+                                    ?>
+                    	
+                    	</div>
+                    	<?php if (isset($sujetEnCours))  { ?>
+                    		<form  action="/page/ticket.php" method="post">
+                    			<input type="hidden" name="action" value="nouveauDetail">
+                    			<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId()?>" />
+                      			<input type="hidden" name="societeID" value="<?php if(isset($ticketSociete)) echo $ticketSociete->getSocieteID() ?>" />
+                                <input type="hidden" name="ticketID" value="<?php if(isset($ticketSociete)) echo $ticketSociete->getId() ?>" />
+                    			<div class="form-group">
+                                    <label for="exampleTextarea">Informations complémentaires :</label>
+                                    <textarea class="form-control" id="exampleTextarea" rows="6" name="detail"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success float-right">Enregistrer informations</button>
+                             </form>
+                        <?php }?>	
+                    	
+                    </div>
+               </div>
+                
+                
+            
+            	<?php } //!if interlocuteur?>
         <!-- !Contenu -->
 		</div>
         

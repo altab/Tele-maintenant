@@ -29,7 +29,7 @@ class connectDB {
             $this -> conn = new PDO("mysql:host=$servername;dbname=$dataBase;charset=utf8", $username, $password);
             // set the PDO error mode to exception
             $this -> conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "<!-- Connexion OK --> \n";
+            //echo "<!-- Connexion OK --> \n";
         }
         catch(PDOException $e)
         {
@@ -47,43 +47,51 @@ class connectDB {
     }
     
     
-//     function insertEmprunt($emprunt) {
+    function insertTicket($sujet, $iID, $socID, $status) {
         
-//         $pdo =  $this -> getConn();
+        $pdo =  $this -> getConn();
+        $today = date("Y-m-d"); 
         
-//         $nom     = $emprunt->getNom();
-//         $adresse = $emprunt->getAdresse();
-//         $date    = $emprunt->getDate();
-//         $type    = $emprunt->getType();
-//         $numero  = $emprunt->getNumero();
-//         $etat    = $emprunt->getEtat();
+        $preparedStatement =  $pdo -> prepare("INSERT INTO ticket( sujet, interlocuteurID, societeID, status, date) VALUES (?,?,?,?,?)");
+        $preparedStatement->bindParam(1, $sujet);
+        $preparedStatement->bindParam(2, $iID);
+        $preparedStatement->bindParam(3, $socID);
+        $preparedStatement->bindParam(4, $status);
+        $preparedStatement->bindParam(5, $today);
+        $preparedStatement->execute();
+        $preparedStatement->closeCursor();
         
-//         $preparedStatement =  $pdo -> prepare("INSERT INTO emprunteur(nom, adresse, date, type, numero, etat) VALUES (?,?,?,?,?,?)");
-//         $preparedStatement->bindParam(1, $nom);
-//         $preparedStatement->bindParam(2, $adresse);
-//         $preparedStatement->bindParam(3, $date);
-//         $preparedStatement->bindParam(4, $type);
-//         $preparedStatement->bindParam(5, $numero);
-//         $preparedStatement->bindParam(6, $etat);
-//         $preparedStatement->execute();
-//         $preparedStatement->closeCursor();
+    }
+    
+    function insertDetail($type,$info,$ticketID) {
         
-//     }
+        $pdo =  $this -> getConn();
+        $today = date("Y-m-d");
+        
+        $preparedStatement =  $pdo -> prepare("INSERT INTO ticketinfo( info, date, type, ticketID) VALUES (?,?,?,?)");
+        $preparedStatement->bindParam(1, $info);
+        $preparedStatement->bindParam(2, $today);
+        $preparedStatement->bindParam(3, $type);
+        $preparedStatement->bindParam(4, $ticketID);
+        $preparedStatement->execute();
+        $preparedStatement->closeCursor();
+        
+    }
     
     
-//     /**
-//      * Liste des enregistrements à supprimer
-//      * @param String $numeros
-//      */
-//     function deleteEmprunt($numeros) {
+    /**
+     * Liste des enregistrements à supprimer
+     * @param String $numeros
+     */
+    function deleteEmprunt($numeros) {
         
-//         $pdo =  $this -> getConn();
+        $pdo =  $this -> getConn();
         
-//         $preparedStatement =  $pdo -> prepare("DELETE FROM emprunteur WHERE `numero` IN ($numeros)");
-//         $preparedStatement->execute();
-//         $preparedStatement->closeCursor();
+        $preparedStatement =  $pdo -> prepare("DELETE FROM emprunteur WHERE `numero` IN ($numeros)");
+        $preparedStatement->execute();
+        $preparedStatement->closeCursor();
         
-//     }
+    }
     
     /**
      * Execute une requete SELECT simple <br>
@@ -147,6 +155,19 @@ class connectDB {
         
         return $reponses;
         
+    }
+    
+    function selectLastId ($table, $champ, $id) {
+        //SELECT id FROM ticket WHERE interlocuteurID=2 ORDER BY id DESC LIMIT 0,1
+        $pdo =  $this -> getConn();
+        
+        $query = "SELECT id FROM $table WHERE $champ=$id ORDER BY id DESC LIMIT 0,1";
+        
+        $reponse = $pdo->query($query);
+        
+        $reponse =  $reponse ->fetch();
+        
+        return $reponse;
     }
     
 }

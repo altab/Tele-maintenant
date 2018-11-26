@@ -3,15 +3,16 @@
 
 class Ticket {
     
-    private $id, $sujet, $interlocuteurID, $societeID, $status;
+    private $id, $sujet, $interlocuteurID, $societeID, $status, $date;
     
-    function __construct($id, $sujet, $interlocuteurID, $societeID, $status) {
+    function __construct($id, $sujet, $interlocuteurID, $societeID, $status, $date) {
         
         $this->setId($id);
         $this->setSujet($sujet);
         $this->setInterlocuteurID($interlocuteurID);
         $this->setSocieteID($societeID);
         $this->setStatus($status);
+        $this->setDate($date);
         
     }
     
@@ -58,6 +59,22 @@ class Ticket {
     public function getSocieteID()
     {
         return $this->societeID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    private function setDate($date)
+    {
+        $this->date = $date;
     }
 
     /**

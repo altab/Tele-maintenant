@@ -3,7 +3,7 @@
 
 class Interlocuteur {
     
-    public $id,$nom,$prenom,$telephone,$email,$societeID;
+    private $id,$nom,$prenom,$telephone,$email,$societeID;
     
     public function __construct($id,$nom,$prenom,$telephone,$email,$societeID) {
         
