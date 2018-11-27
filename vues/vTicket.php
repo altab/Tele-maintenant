@@ -31,7 +31,7 @@
             	<div class="card h-100">
   					<h5 class="card-header  bg-primary text-white">1 - Recherche Société</h5>
                 	<div class="card-body">
-                        <form action="/page/ticket.php" method="post">
+                        <form action="/page/ticket.php" method="get">
                     	<fieldset>    	
             			<legend>Informations</legend>
         					<div class="row">
@@ -66,7 +66,7 @@
             		<div class="card h-100">
   					<h5 class="card-header bg-primary text-white">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo ucfirst($societeEnCours); ?></h5>
                 	<div class="card-body">
-                        <form action="/page/ticket.php" method="post">
+                        <form action="/page/ticket.php" method="get">
                          <?php if(isset($societeEnCours))echo "<input type='hidden' value='$societeEnCours' name='societeEnCours'/>"; ?> 
                     	<fieldset>    	
             			<legend>Informations</legend>
@@ -196,13 +196,14 @@
             	<div class="card m-3 w-100">
             		
             	
-                    <div class="card-header" id="ajouterTicket"><i class="fas fa-fw fa-pencil-alt"></i> Ajouter un ticket</div>
+                    <div class="card-header <?php if (!isset($statusTicket) || $statusTicket != 0 ) echo "bg-warning text-dark";?>" id="ajouterTicket"><i class="fas fa-fw fa-pencil-alt"></i><?php if (isset($sujetEnCours) ) echo " Modifier un ticket"; else echo " Ajouter un ticket";?></div>
                     	
                     <div class="card-body form-group">
                    		<div  class="form-group">
-                        	<form  class="form-inline"  action="/page/ticket.php" method="get">
+                        	<form  class="form-inline"  action="/page/ticket.php#ajouterTicket" method="get">
                         		<input type="hidden" name="action" value="nouveauTicket">
                         		<input class="form-control col-10 mr-5" type="text" name="sujet" placeholder="Sujet du ticket" <?php 
+                        		if (isset($statusTicket) && $statusTicket == 0 ) echo " disabled=\"disabled\"";
                         		if (isset($sujetEnCours) ) echo " value=\"".ucfirst($sujetEnCours->getSujet())."\" ";
                         		?>>
                         		<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId(); ?>">
@@ -229,23 +230,80 @@
                     	
                     	</div>
                     	<?php if (isset($sujetEnCours))  { ?>
-                    		<form  action="/page/ticket.php" method="post">
+                    		<form  action="/page/ticket.php#ajouterTicket" method="get">
                     			<input type="hidden" name="action" value="nouveauDetail">
                     			<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId()?>" />
-                      			<input type="hidden" name="societeID" value="<?php if(isset($ticketSociete)) echo $ticketSociete->getSocieteID() ?>" />
-                                <input type="hidden" name="ticketID" value="<?php if(isset($ticketSociete)) echo $ticketSociete->getId() ?>" />
+                      			<input type="hidden" name="societeID" value="<?php if(isset($sujetEnCours)) echo $sujetEnCours->getSocieteID() ?>" />
+                                <input type="hidden" name="ticketID" value="<?php if(isset($sujetEnCours)) echo $sujetEnCours->getId() ?>" />
                     			<div class="form-group">
-                                    <label for="exampleTextarea">Informations complémentaires :</label>
-                                    <textarea class="form-control" id="exampleTextarea" rows="6" name="detail"></textarea>
+                                    <label for="textareaTicket">Informations complémentaires :</label>
+                                    <textarea class="form-control" id="textareaTicket" rows="6" name="detail"  <?php if ($statusTicket == 0 ) echo " disabled=\"disabled\"";?>></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-success float-right">Enregistrer informations</button>
+                                <button type="submit" class="btn btn-success float-right" <?php if ($statusTicket == 0 ) echo " disabled=\"disabled\""; ?>>Enregistrer informations</button>
                              </form>
                         <?php }?>	
                     	
                     </div>
-               </div>
-                
-                
+                </div>
+              </div>
+            <?php if (isset($sujetEnCours))  { ?>  
+            <div  class="row">
+            	
+            	<div class="card m-3 w-100">
+            		
+            	
+                    <div class="card-header <?php if (isset($statusTicket) && $statusTicket == 1 ) echo " bg-primary text-white";?>" id="ajouterAction"><i class="fas fa-cogs"></i> Ajouter une action</div>
+                    	
+                    <div class="card-body form-group">
+                    	
+                    	<div class="row" id="historiqueAction">
+                    	<?php 
+                    	if (isset($actionEnCours)) {
+                                        $index=0;
+                                        foreach ($actionEnCours as $detail) {
+                                            echo "<ul><li><b>".$detail['date']."</b> : ".$detail['info']."\n";
+                                            $index++;
+                                        }
+                                        for ($i = 0; $i < $index; $i++) {
+                                            echo "</li></ul>\n";
+                                        }
+                                    }
+                                    ?>
+                    	
+                    	</div>
+                    	
+                    		<form  action="/page/ticket.php#ajouterAction" method="get">
+                    			<input type="hidden" name="action" value="nouvelleAction">
+                    			<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId()?>" />
+                      			<input type="hidden" name="societeID" value="<?php if(isset($sujetEnCours)) echo $sujetEnCours->getSocieteID() ?>" />
+                                <input type="hidden" name="ticketID" value="<?php if(isset($sujetEnCours)) echo $sujetEnCours->getId() ?>" />
+                    			<div class="form-group">
+                                    <label for="textareaAction">Description de l'action :</label>
+                                    <textarea class="form-control" id="textareaAction" rows="6" name="actionTicket"  <?php if ($statusTicket == 0 ) echo " disabled=\"disabled\"";?>></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success float-right" <?php if ($statusTicket == 0 ) echo " disabled=\"disabled\"";?>>Enregistrer Action</button>
+                             </form>
+                        	
+                    	
+                    </div>
+                </div>
+              </div>
+              
+              <form action="/page/ticket.php" method="post">
+                  <input type="hidden" name="action" value="changerStatusTicket">
+                  <input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId()?>" />
+                  <input type="hidden" name="societeID" value="<?php if(isset($sujetEnCours)) echo $sujetEnCours->getSocieteID() ?>" />
+                  <input type="hidden" name="ticketID" value="<?php if(isset($sujetEnCours)) echo $sujetEnCours->getId() ?>" />
+                  <div  class="form-group row">
+                      <div class="col-12">
+	                       <?php 
+	                       if($statusTicket==1) echo '<button  class="btn btn-danger float-right" type="submit"><i class="fas fa-lock"></i> Cloturer ce tiket'; 
+	                      else echo '<button  class="btn bg-warning text-dark float-right" type="submit"><i class="fas fa-lock-open"></i> Rouvrir ce tiket';
+	                          ?></button>
+                      </div>
+                  </div>
+              </form>
+              <?php }?>         
             
             	<?php } //!if interlocuteur?>
         <!-- !Contenu -->

@@ -22,6 +22,6 @@ legend {
 	background-color: #ffffff;
 }
 td.align-center { width: 74px;}
-#historique li {
+#historique li, #historiqueAction li {
 	list-style-type: square !important;
 }

@@ -135,7 +135,7 @@ class connectDB {
      */
     function selectFromWhereAnd($element,$table,$whereEl, $whereVal, $whereElAnd, $whereValAnd) {
         
-        if((isset($whereElAnd) && $whereElAnd != '') && (isset($whereValAnd) && $whereValAnd != '')) {
+        if(isset($whereElAnd) && isset($whereValAnd)) {
             $where = " WHERE ".$whereEl."='".$whereVal."' ";
             $where .= " AND $whereElAnd='".$whereValAnd."' ";
         } else $where = '';
@@ -143,6 +143,44 @@ class connectDB {
         $pdo =  $this -> getConn();
         
         $query = "SELECT ".$element." FROM ".$table.$where;
+        
+        $reponse = $pdo->query($query);
+        
+        $reponses = NULL;
+        while($message = $reponse->fetch()) {
+            
+            $reponses[] = $message;
+            
+        }
+        
+        return $reponses;
+        
+    }
+    
+    /**
+     * 
+     * @param unknown $element
+     * @param unknown $table
+     * @param unknown $whereEl
+     * @param unknown $whereVal
+     * @param unknown $whereElAnd
+     * @param unknown $whereValAnd
+     * @param unknown $sort
+     * @param unknown $sortBy
+     * @return NULL|mixed
+     */
+    function selectFromWhereAndSorted($element,$table,$whereEl, $whereVal, $whereElAnd, $whereValAnd, $sortCol,$sortBy) {
+        
+        if(isset($whereElAnd) && isset($whereValAnd)) {
+            $where = " WHERE ".$whereEl."='".$whereVal."' ";
+            $where .= " AND $whereElAnd='".$whereValAnd."' ";
+        } else $where = '';
+        
+        $sorted = " ORDER BY ".$sortCol." ".$sortBy;
+        
+        $pdo =  $this -> getConn();
+        
+        $query = "SELECT ".$element." FROM ".$table.$where.$sorted;
         
         $reponse = $pdo->query($query);
         
@@ -168,6 +206,30 @@ class connectDB {
         $reponse =  $reponse ->fetch();
         
         return $reponse;
+    }
+    
+    
+    /**
+     * updateRaw ($table, $valEl, $valVal, $whereEl, $whereVal)
+     * -> UPDATE ticket SET status=0 WHERE id=68
+     * @param  $table
+     * @param  $valEl
+     * @param  $valVal
+     * @param  $whereEl
+     * @param  $whereVal
+     */
+    function updateRaw ($table, $valEl, $valVal, $whereEl, $whereVal) {
+        //
+        $pdo =  $this -> getConn();
+        
+        $query = "UPDATE $table SET $valEl=$valVal WHERE $whereEl=$whereVal";
+                
+        // Prepare statement
+        $stmt = $pdo->prepare($query);
+        
+        // execute the query
+        $stmt->execute();
+        
     }
     
 }
