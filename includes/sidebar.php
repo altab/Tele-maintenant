@@ -14,7 +14,7 @@
             <span>Tickets</span></a>
              <div class="dropdown-menu" aria-labelledby="pagesDropdown">
                 <a class="dropdown-item" href="/page/ticket.php">Ajouter</a>
-                <a class="dropdown-item" href="/page/ticket.php">Modifier</a>
+                <a class="dropdown-item" href="/page/modifierTicket.php">Modifier</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/page/listeTickets.php">Liste</a>
               </div>

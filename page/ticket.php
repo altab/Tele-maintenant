@@ -29,7 +29,6 @@ $connexion = new connectDB();
 //on recupere les societes
 $societes = $connexion->selectFromWhere('*','Societe','', '');
 
-
 $interlocuteurs;
 $societeEnCours;
 $interlocuteurEnCours;
@@ -50,9 +49,6 @@ if (!isset($_GET['societe'])) {
     }
     
 }
-
-
-
 
 // Formulaire de recherche Société
 if (isset($_GET['societe']) && $_GET['societe'] != '') {
@@ -332,8 +328,6 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
         $IDTicket = $lastTicketFromInterlocuteur['id'];
     }
     
-    
-    
     $queryTicketID = $connexion -> selectFromWhere('*','ticket','id', $IDTicket );
     
     
@@ -374,7 +368,12 @@ elseif ((isset($_POST['action']) && $_POST['action'] == 'changerStatusTicket') )
     
     $interlocuteurIdPost = $_POST['interlocuteurID'];
     $tabInterlocuteurs =  $connexion->selectFromWhere('*', 'interlocuteur',  'id', $interlocuteurIdPost);
-    $interlocuteurEnCours = new Interlocuteur($tabInterlocuteurs[0]['id'], $tabInterlocuteurs[0]['nom'], $tabInterlocuteurs[0]['prenom'], $tabInterlocuteurs[0]['telephone'], $tabInterlocuteurs[0]['email'], $tabInterlocuteurs[0]['societeID']);
+    $interlocuteurEnCours = new Interlocuteur($tabInterlocuteurs[0]['id'], 
+                                                $tabInterlocuteurs[0]['nom'], 
+                                                $tabInterlocuteurs[0]['prenom'], 
+                                                $tabInterlocuteurs[0]['telephone'], 
+                                                $tabInterlocuteurs[0]['email'], 
+                                                $tabInterlocuteurs[0]['societeID']);
     
     
     

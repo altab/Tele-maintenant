@@ -159,14 +159,14 @@ class connectDB {
     
     /**
      * 
-     * @param unknown $element
-     * @param unknown $table
-     * @param unknown $whereEl
-     * @param unknown $whereVal
-     * @param unknown $whereElAnd
-     * @param unknown $whereValAnd
-     * @param unknown $sort
-     * @param unknown $sortBy
+     * @param  $element
+     * @param  $table
+     * @param  $whereEl
+     * @param  $whereVal
+     * @param  $whereElAnd
+     * @param  $whereValAnd
+     * @param  $sort
+     * @param  $sortBy
      * @return NULL|mixed
      */
     function selectFromWhereAndSorted($element,$table,$whereEl, $whereVal, $whereElAnd, $whereValAnd, $sortCol,$sortBy) {
@@ -229,6 +229,27 @@ class connectDB {
         
         // execute the query
         $stmt->execute();
+        
+    }
+    
+    //SELECT * FROM ticket left join ticketinfo on ticket.id = ticketinfo.ticketID WHERE ticket.id=70
+    function getDetailsTicketFromId($idTicket){
+        
+        $pdo =  $this -> getConn();
+        
+        $query = "SELECT * FROM ticket left join ticketinfo on ticket.id = ticketinfo.ticketID WHERE ticket.id=$idTicket ORDER BY ticketinfo.type, ticketinfo.id";
+        
+        // Prepare statement
+       $reponse = $pdo->query($query);
+        
+        $reponses = NULL;
+        while($message = $reponse->fetch()) {
+            
+            $reponses[] = $message;
+            
+        }
+        
+        return $reponses;
         
     }
     

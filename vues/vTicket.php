@@ -196,7 +196,11 @@
             	<div class="card m-3 w-100">
             		
             	
-                    <div class="card-header <?php if (!isset($statusTicket) || $statusTicket != 0 ) echo "bg-warning text-dark";?>" id="ajouterTicket"><i class="fas fa-fw fa-pencil-alt"></i><?php if (isset($sujetEnCours) ) echo " Modifier un ticket"; else echo " Ajouter un ticket";?></div>
+                    <div class="card-header <?php if (!isset($statusTicket) || $statusTicket != 0 ) echo "bg-warning text-dark";?>" id="ajouterTicket">
+                    	<i class="fas fa-fw fa-pencil-alt"></i><?php if (isset($sujetEnCours) ) echo " Modifier un ticket"; else echo " Ajouter un ticket";?>
+                    	<?php if((!isset($statusTicket) || $statusTicket != 0 ) && (isset($sujetEnCours)) )
+                    	    echo '<a href="/page/modifierTicket.php?action=modifierID&id='.$sujetEnCours->getId().'" class="btn btn btn-outline-secondary btn-sm float-right">Modifications avancées</a>'; ?>
+                    </div>
                     	
                     <div class="card-body form-group">
                    		<div  class="form-group">
