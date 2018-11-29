@@ -277,5 +277,16 @@ class connectDB {
         
     }
     
+    function searchAllTickets(){
+        /*
+         * SELECT C.CLI_ID, C.CLI_NOM, T.TEL_NUMERO, E.EML_ADRESSE, A.ADR_VILLE
+         * FROM T_CLIENT C, T_TELEPHONE T, T_ADRESSE A, T_EMAIL E
+         * WHERE C.CLI_ID = T.CLI_ID
+         * AND C.CLI_ID = A.CLI_ID
+         * AND C.CLI_ID = E.CLI_ID
+         * */
+        
+    }
+    
 }
 ?>

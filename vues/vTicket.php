@@ -142,12 +142,12 @@
             	
             	<div class="card m-3 w-100">
             	
-                    <div class="card-header <?php if (isset($tabTicketsSociete) && $tabTicketsSociete != '') echo " bg-info  text-white"; else echo " bg-warning text-dark"; ?>"><i class="fas fa-fw fa-list-alt"></i> Tickets en cours</div>
+                    <div class="card-header <?php if (isset($tabTicketsSociete) && $tabTicketsSociete != '') echo " bg-info  text-white"; else echo " bg-secondary text-dark"; ?>"><i class="fas fa-fw fa-list-alt"></i> Tickets en cours</div>
                     <div class="card-body">
                       <div class="table-responsive">
                       <?php if (isset($tabTicketsSociete) && $tabTicketsSociete != '') { ?>
                       
-                       	 <table class="table table-bordered" id="dataTable" >
+                       	 <table class="table table-bordered table-hover" id="dataTable" >
                           <thead>
                             <tr>
                               <th>ID</th>
@@ -173,8 +173,8 @@
                                   <td><?php echo $ticketSociete->getId();?></td>
                                   <td><?php echo $ticketSociete->getDate();?></td>
                                   <td><?php echo ucfirst($ticketSociete->getSujet());?></td>
-                                  <td><?php echo $interlocuteurEnCours->getPrenom() ." ".$interlocuteurEnCours->getNom();?></td>
-                                  <td><?php echo $ticketSociete->getSocieteID();?></td>
+                                  <td><?php echo $ticketSociete->NomFromInterlocuteurID ();?></td>
+                                  <td><?php echo $ticketSociete->NomFromSocieteID ();?></td>
                                   <td><?php echo $status;?></td>
                                   <td class="align-center"><button type="submit" class="btn btn-primary text-white float-right"><i class="fas fa-arrow-circle-right"></i></button></td>
                                 </tr>

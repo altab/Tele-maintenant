@@ -58,9 +58,9 @@ if (isset($_GET['societe']) && $_GET['societe'] != '') {
     $sPOST = htmlentities($_GET['societe']);
 
     
-    $societeID = $connexion->selectFromWhere('*','societe','nom', $sPOST);
+    $societeEnCours = $connexion->selectFromWhere('*','societe','nom', $sPOST);
 
-    $societe = new Societe($societeID[0]['id'], $societeID[0]['nom'], $societeID[0]['adresse'], $societeID[0]['telephone'], $societeID[0]['email']);
+    $societe = new Societe($societeEnCours[0]['id'], $societeEnCours[0]['nom'], $societeEnCours[0]['adresse'], $societeEnCours[0]['telephone'], $societeEnCours[0]['email']);
     
     $societeEnCours = $societe -> getNom();
 
@@ -230,7 +230,8 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'detailTicket')
                                    $queryTicketID[0]['interlocuteurID'], 
                                    $queryTicketID[0]['societeID'], 
                                    $queryTicketID[0]['status'], 
-                                   $queryTicketID[0]['date']);
+                                   $queryTicketID[0]['date'],
+                                   $queryTicketID[0]['utilisateurID']);
         
         $statusTicket = $sujetEnCours->getStatus();
         
@@ -282,7 +283,8 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
             $queryTicketID[0]['interlocuteurID'],
             $queryTicketID[0]['societeID'],
             $queryTicketID[0]['status'],
-            $queryTicketID[0]['date']);
+            $queryTicketID[0]['date'],
+            $queryTicketID[0]['utiliateurID']);
         
         $statusTicket = $sujetEnCours->getStatus();
         /*
@@ -336,7 +338,8 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
         $queryTicketID[0]['interlocuteurID'],
         $queryTicketID[0]['societeID'],
         $queryTicketID[0]['status'],
-        $queryTicketID[0]['date']);
+        $queryTicketID[0]['date'],
+        $queryTicketID[0]['utiliateurID']);
     
     $statusTicket = $sujetEnCours->getStatus();
     /*
@@ -396,7 +399,8 @@ elseif ((isset($_POST['action']) && $_POST['action'] == 'changerStatusTicket') )
         $queryTicketID[0]['interlocuteurID'],
         $queryTicketID[0]['societeID'],
         $queryTicketID[0]['status'],
-        $queryTicketID[0]['date']);
+        $queryTicketID[0]['date'],
+        $queryTicketID[0]['utiliateurID']);
     
     
     
@@ -421,7 +425,8 @@ elseif ((isset($_POST['action']) && $_POST['action'] == 'changerStatusTicket') )
         $queryTicketID[0]['interlocuteurID'],
         $queryTicketID[0]['societeID'],
         $queryTicketID[0]['status'],
-        $queryTicketID[0]['date']);
+        $queryTicketID[0]['date'],
+        $queryTicketID[0]['utiliateurID']);
     $statusTicket = $sujetEnCours->getStatus();
     
     //on recupere tous les tickets de la société
@@ -460,7 +465,8 @@ function tabTicketBySocieteByUser($socID,$interlocuteurEnCoursId) {
                                               $ticket['interlocuteurID'], 
                                               $ticket['societeID'], 
                                               $ticket['status'], 
-                                              $ticket['date']);
+                                              $ticket['date'],
+                                              $ticket['utilisateurID']);
             
         }
         

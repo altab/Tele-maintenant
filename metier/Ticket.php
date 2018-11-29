@@ -3,9 +3,9 @@
 
 class Ticket {
     
-    private $id, $sujet, $interlocuteurID, $societeID, $status, $date;
+    private $id, $sujet, $interlocuteurID, $societeID, $status, $date, $utilisateurID;
     
-    function __construct($id, $sujet, $interlocuteurID, $societeID, $status, $date) {
+    function __construct($id, $sujet, $interlocuteurID, $societeID, $status, $date, $utilisateurID) {
         
         $this->setId($id);
         $this->setSujet($sujet);
@@ -13,9 +13,29 @@ class Ticket {
         $this->setSocieteID($societeID);
         $this->setStatus($status);
         $this->setDate($date);
+        $this->setUtilisateurID($utilisateurID);
         
     }
     
+    function NomFromInterlocuteurID () {
+        require_once '../DAO/connectDB.php';
+        $connexion = new connectDB();
+        
+        $nomInterlocuteurs = $connexion->selectFromWhere('nom,prenom','interlocuteur','id', $this->getInterlocuteurID());
+                
+        return $nomInterlocuteurs[0]['prenom']." ".$nomInterlocuteurs[0]['nom'];
+        
+    }
+    
+    function NomFromSocieteID () {
+        require_once '../DAO/connectDB.php';
+        $connexion = new connectDB();
+        
+        $nomSocietes = $connexion->selectFromWhere('nom','societe','id', $this->getSocieteID());
+        
+        return $nomSocietes[0]['nom'];
+        
+    }
     
     
     
@@ -67,6 +87,23 @@ class Ticket {
     public function getDate()
     {
         return $this->date;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getUtilisateurID()
+    {
+        return $this->utilisateurID;
+    }
+
+    /**
+     * @param mixed $utilisateur
+     */
+    private function setUtilisateurID($utilisateurID)
+    {
+        $this->utilisateurID = $utilisateurID;
     }
 
     /**

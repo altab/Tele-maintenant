@@ -25,7 +25,7 @@
         <div class="container-fluid">
         <!-- Contenu -->
         <?php if(isset($warning)) echo "<div class=\"row bg-warning text-dark mx-1 mb-3 pl-3 pt-1\"><h5><i class=\"fas fa-exclamation-circle\"></i> $warning</h5></div>";?>
-        <div class="card mb-5">
+        <div class="card mb-3">
           <div class="card-header bg-primary text-white">
             <span>Rechercher un ticket</span>
           </div>
@@ -54,7 +54,7 @@
           </div>
           </form>
           <div class="card-body">
-				<table class="table table-bordered rounded">
+				<table class="table table-bordered rounded table-hover">
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col" class="">élément</th>
@@ -132,7 +132,7 @@
           	  <form action="/page/modifierTicket.php" method="post" onsubmit="return deleteElements(this);">
           	   <input type="hidden" name="action" value="supprDetails">
           	   <input type="hidden" name="id" value="<?php echo $detailsTicket[0][0];?>">
-				<table class="table table-bordered rounded">
+				<table class="table table-bordered rounded table-hover">
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col" class="">Type</th>

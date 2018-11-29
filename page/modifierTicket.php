@@ -91,7 +91,7 @@ if (isset($idTicket)) {
     $detailsTicket = $connexion -> getDetailsTicketFromId($idTicket);
     if($detailsTicket == '') $ticketExiste = false;
 
-    $ticketEnCours = new Ticket($detailsTicket[0]['id'], $detailsTicket[0]['sujet'], $detailsTicket[0]['interlocuteurID'], $detailsTicket[0]['societeID'], $detailsTicket[0]['status'], $detailsTicket[0][5]);
+    $ticketEnCours = new Ticket($detailsTicket[0]['id'], $detailsTicket[0]['sujet'], $detailsTicket[0]['interlocuteurID'], $detailsTicket[0]['societeID'], $detailsTicket[0]['status'], $detailsTicket[0][5],$detailsTicket[0]['utilisateurID']);
 
     //Affichage des details du ticket
     if($ticketExiste) {
