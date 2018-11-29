@@ -12,3 +12,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>js/sb-admin.min.js"></script>
+    
+    <!-- Custom scripts by Philippe Cohen-->
+    <script src="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>js/scripts.js"></script>

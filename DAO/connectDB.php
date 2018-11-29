@@ -81,17 +81,24 @@ class connectDB {
     
     /**
      * Liste des enregistrements à supprimer
+     * Peut egalement supprimer une donnée simple (non array)
      * @param String $numeros
      */
-    function deleteEmprunt($numeros) {
+    function deleteArrayFrom($table, $whereEl, $whereVals) {
         
         $pdo =  $this -> getConn();
+                
+        // On verifie que c'est bien un array qui sera traité
+        if (!is_array($whereVals)) $whereVals = array($whereVals); 
         
-        $preparedStatement =  $pdo -> prepare("DELETE FROM emprunteur WHERE `numero` IN ($numeros)");
-        $preparedStatement->execute();
-        $preparedStatement->closeCursor();
-        
+        // Protection contre les SQL injection
+        $whereVals = array_map([$pdo, 'quote'], $whereVals); 
+            
+        $pdo->exec("DELETE FROM $table WHERE $whereEl IN (" . implode(', ', $whereVals) . ")");
+ 
     }
+    
+    
     
     /**
      * Execute une requete SELECT simple <br>
@@ -210,7 +217,7 @@ class connectDB {
     
     
     /**
-     * updateRaw ($table, $valEl, $valVal, $whereEl, $whereVal)
+     * updateRaw ($table, $valEl, $valVal, $whereEl, $whereVal)<br>
      * -> UPDATE ticket SET status=0 WHERE id=68
      * @param  $table
      * @param  $valEl
@@ -222,7 +229,7 @@ class connectDB {
         //
         $pdo =  $this -> getConn();
         
-        $query = "UPDATE $table SET $valEl=$valVal WHERE $whereEl=$whereVal";
+        $query = "UPDATE $table SET $valEl='$valVal' WHERE $whereEl=$whereVal";
                 
         // Prepare statement
         $stmt = $pdo->prepare($query);
@@ -231,6 +238,23 @@ class connectDB {
         $stmt->execute();
         
     }
+
+    function updateRawDate ($table, $valEl, $valVal, $whereEl, $whereVal) {
+        //
+        $pdo =  $this -> getConn();
+        
+        
+        $query = "UPDATE $table SET date='$valVal' WHERE id=$whereVal";
+        
+        // Prepare statement
+        $stmt = $pdo->prepare($query);
+        
+        // execute the query
+        $stmt->execute();
+        
+        
+    }
+    
     
     //SELECT * FROM ticket left join ticketinfo on ticket.id = ticketinfo.ticketID WHERE ticket.id=70
     function getDetailsTicketFromId($idTicket){

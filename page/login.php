@@ -5,6 +5,7 @@
  * @author Philippe Cohen
  */
 require_once '../DAO/connectDB.php';
+require_once '../metier/Utilisateur.php';
 
 // recuperation des variables
 if (isset($_SESSION['origine']) && $_SESSION['origine'] != '')
@@ -20,7 +21,7 @@ if (isset($_POST['password']) && $_POST['password'] != '')
 if (isset($_GET['quitter']) && $_GET['quitter'] == 'Deconnexion')
     sessionDestroy();
 
-if (isset($_POST['email']) && $_POST['email'] != '' && isset($_POST['password']) && $_POST['password'] != '')     
+if (isset($login) && isset($password))     
     VerifLogin($login, $password, $origine);
 
 function sessionDestroy()
@@ -32,20 +33,30 @@ function sessionDestroy()
 function VerifLogin($login, $password, $origine)
 {
     $connexion = new connectDB();
-    $utilisateurs = $connexion->selectFromWhere('*','users','','');
+    $tabUtilisateur = $connexion->selectFromWhereAnd('*','utilisateur','email',$login, 'password', $password);
+    if($tabUtilisateur) $utilisateur= new Utilisateur($tabUtilisateur[0]['id'], 
+                                    $tabUtilisateur[0]['nom'],
+                                    $tabUtilisateur[0]['prenom'], 
+                                    $tabUtilisateur[0]['email'], 
+                                    $tabUtilisateur[0]['password'], 
+                                    $tabUtilisateur[0]['icone'], 
+                                    $tabUtilisateur[0]['role']);
 
-    foreach ($utilisateurs as $utilisateur) {
-
-        if (($utilisateur['email'] == $login) && ($utilisateur['password'] == $password)) { //
-            $_SESSION['login'] = $login;
+    if (isset($utilisateur)) {
+        
+            $_SESSION['login'] = $utilisateur->getEmail();
+            $_SESSION['role'] = $utilisateur->getRole();
+            
             if (isset($origine)) $urlOrigine = $origine; else $urlOrigine = '';
-            header("Location:  http://" . $_SERVER['SERVER_NAME'] . $urlOrigine . "");
-        } else {
-            if (isset($login))
-                header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/page/login.php?connexion=ko");
+            
+//             header("Location:  http://" . $_SERVER['SERVER_NAME'] . $urlOrigine . "");
+
+    } else {
+            if (isset($login));
+//                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/page/login.php?connexion=ko");
 //             else
 //                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/metier/login.php");
-         }
+
     }
     $connexion = null; //fermeture de la connexion
 }

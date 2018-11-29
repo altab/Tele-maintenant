@@ -25,3 +25,8 @@ td.align-center { width: 74px;}
 #historique li, #historiqueAction li {
 	list-style-type: square !important;
 }
+.card h1 {
+	font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.5;
+}

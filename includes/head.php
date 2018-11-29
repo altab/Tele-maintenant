@@ -3,6 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Philippe Cohen">
+    <link rel="icon" href="/favicon.ico" />
     
     <!-- Bootstrap core CSS-->
     <link href="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">

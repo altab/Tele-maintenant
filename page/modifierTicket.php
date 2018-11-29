@@ -2,6 +2,9 @@
 
 $_SESSION['origine'] = "/page/modifierTicket.php";
 if (!isset($_SESSION['login'])) header("Location:  http://".$_SERVER['SERVER_NAME']."/page/login.php");
+if (isset($_SESSION['role'])) $statusUser = $_SESSION['role'];
+
+
 
 /**
  * Gestion des tickets - Opreations de traitement
@@ -20,48 +23,98 @@ require_once '../metier/Ticket.php';
  */
 $connexion = new connectDB();
 
+/*
+ * Variables à utiliser dans la vue
+ */
+$detailsTicket;
+$afficher='';
+$warning;
+
+
+if (isset($_GET['id']) && $_GET['id'] != '')   $idTicket = $_GET['id'];
+if (isset($_POST['id']) && $_POST['id'] != '') $idTicket = $_POST['id'];
+
+
+/*
+ * Traitement des formulaires
+ */
+if (isset($_GET['action']) && $_GET['action']=='modifierSujet') {
+    
+    $nouveauchamp = $_GET['modifier'];
+    $connexion->updateRaw('ticket', 'sujet', $nouveauchamp, 'id', $idTicket);
+
+} elseif (isset($_GET['action']) && $_GET['action']=='modifierInterlocuteur') {
+    
+    $nouveauchamp = $_GET['modifier'];
+    $connexion->updateRaw('ticket', 'interlocuteurID', $nouveauchamp, 'id', $idTicket);
+    
+} elseif (isset($_GET['action']) && $_GET['action']=='modifierSociete') {
+    
+    $nouveauchamp = $_GET['modifier'];
+    $connexion->updateRaw('ticket', 'societeID', $nouveauchamp, 'id', $idTicket);
+    
+} elseif (isset($_GET['action']) && $_GET['action']=='modifierStatus') {    
+    
+    $nouveauchamp = $_GET['modifier'];
+    $connexion->updateRaw('ticket', 'status', $nouveauchamp, 'id', $idTicket);
+    
+} elseif (isset($_GET['action']) && $_GET['action']=='modifierDate') {    
+    
+    $nouveauchamp = urldecode($_GET['modifier']);
+    $connexion->updateRawDate('ticket', 'date', $nouveauchamp, 'id', $idTicket);
+    
+} elseif (isset($_POST['action']) && $_POST['action']=='supprDetails'){
+    
+    $detailIDs = $_POST['detailID'];
+    $connexion ->deleteArrayFrom('ticketinfo', 'id', $detailIDs);
+    
+}elseif (isset($_POST['action']) && $_POST['action']=='supprTicket'){
+    
+    $connexion->deleteArrayFrom('ticket', 'id', $_POST['id']);
+
+    
+}
+
+
+
+
+
 
 //Modification d'un Ticket dont on connait l'ID
-if (isset($_GET['action']) && $_GET['action'] == 'modifierID') {
-    
-    if (isset($_GET['id']) && $_GET['id'] != '') $idTicket = $_GET['id'];
-    
-    $afficher =  "Le ticket à modifier est le : ".$idTicket."<br><br>";
-    
-    /*
-     * Affichage du ticket
-     */
-    $infosTicket = $connexion -> selectFromWhere('*','ticket','id', $idTicket);//SELECT * FROM `ticket` WHERE `id`=68
-    foreach ($infosTicket as $infoTicket) {
-        
-        $afficher .=  "<br>id = ".$infoTicket['id'];
-        $afficher .=  "<br>sujet = ".$infoTicket['sujet'];
-        $afficher .=  "<br>interlocuteurID = ".$infoTicket['interlocuteurID'];
-        $afficher .=  "<br>societeID = ".$infoTicket['societeID'];
-        $afficher .=  "<br>status = ".$infoTicket['status'];
-        $afficher .=  "<br>date = ".$infoTicket['date'];
-        $afficher .=  "<br><br><br>";
-        
-    }
+if (isset($idTicket)) {
+            
+    $ticketExiste = true;
     
     /*
      * Affichage des details du ticket
      */
     $detailsTicket = $connexion -> getDetailsTicketFromId($idTicket);
-    //var_dump($infosTicket);
+    if($detailsTicket == '') $ticketExiste = false;
+
+    $ticketEnCours = new Ticket($detailsTicket[0]['id'], $detailsTicket[0]['sujet'], $detailsTicket[0]['interlocuteurID'], $detailsTicket[0]['societeID'], $detailsTicket[0]['status'], $detailsTicket[0][5]);
+
+    //Affichage des details du ticket
+    if($ticketExiste) {
+        foreach ($detailsTicket as $detailTicket) {
+            
+            if($detailTicket['type'] == 0) $type = "Detail : ";
+            else $type ="Action : ";
+                    
+        }
+    } else $warning = "Le ticket demandé n'existe pas !";
     
-    foreach ($detailsTicket as $detailTicket) {
-        
-        if($detailTicket['type'] == 0) $type = "Detail : ";
-        else $type ="Action : ";
-        
-        $afficher .=  "<br>".$type.$detailTicket['info'];
-        $afficher .=  "-> ID : ".$detailTicket['id'];
-        
-    }
+    
+    
+    
     
 }
-
+// On a pas de variable passé à la page
+else {
+    
+    $afficher = "Pas de ticket selectionné !";
+    
+}
+echo $afficher;
 
 
 $connexion = null;
