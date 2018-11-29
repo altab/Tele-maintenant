@@ -49,13 +49,13 @@ function VerifLogin($login, $password, $origine)
             
             if (isset($origine)) $urlOrigine = $origine; else $urlOrigine = '';
             
-//             header("Location:  http://" . $_SERVER['SERVER_NAME'] . $urlOrigine . "");
+             header("Location:  http://" . $_SERVER['SERVER_NAME'] . $urlOrigine . "");
 
     } else {
-            if (isset($login));
-//                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/page/login.php?connexion=ko");
-//             else
-//                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/metier/login.php");
+            if (isset($login))
+                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/page/login.php?connexion=ko");
+            else
+                header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/metier/login.php");
 
     }
     $connexion = null; //fermeture de la connexion
