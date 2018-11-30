@@ -13,10 +13,10 @@
             <i class="fas fa-fw fa-list-alt"></i>
             <span>Tickets</span></a>
              <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                <a class="dropdown-item" href="/page/ticket.php">Ajouter</a>
-                <a class="dropdown-item" href="/page/modifierTicket.php">Modifier</a>
+                <a class="dropdown-item" href="/page/ticket.php">Ajouter / Gerer</a>
+                <a class="dropdown-item" href="/page/modifierTicket.php">Modifier / Voir</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/page/listeTickets.php">Liste</a>
+                <a class="dropdown-item" href="/page/listeTickets.php">Liste complète</a>
               </div>
             </li>
         <li class="nav-item">

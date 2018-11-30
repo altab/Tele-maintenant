@@ -1,7 +1,5 @@
 <?php session_start();
-
-$_SESSION['origine'] = "/page/rechercher.php";
-if (!isset($_SESSION['login'])) header("Location:  http://".$_SERVER['SERVER_NAME']."/page/login.php");
+require_once '../includes/session.php';
 
 /**
  * Gestion des tickets - Opreations de traitement
@@ -11,5 +9,5 @@ $sectionSubject = "Nouveau";
 
 
 
-require_once '../vues/vDashboard.php';
+require_once '../vues/vRechercher.php';
 ?>

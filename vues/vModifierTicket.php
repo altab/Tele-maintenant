@@ -123,6 +123,19 @@
                       </td>
                       </form>
                     </tr>
+                    
+                    <tr>
+                      <form action="/page/modifierTicket.php">
+                          <input type="hidden" name="action" value="modifierUtilisateur">
+                          <input type="hidden" name="id" value="<?php echo $detailsTicket[0][0];?>">
+                      <th scope="row">Opérateur</th>
+                      <td><input class="form-control" type="text" name="modifier" value="<?php echo $ticketEnCours->getUtilisateurID(); ?>" <?php if(!isset($statusUser) || $statusUser==0) echo" disabled";?>></td>
+                      <td>                      	
+                      	<button class="btn btn-sm btn-primary" type="submit" <?php if(!isset($statusUser) || $statusUser==0) echo" disabled";?>><i class="fas fa-edit"></i></button>
+                      </td>
+                      </form>
+                    </tr>
+                    
                   </tbody>
                 </table>
           </div>
@@ -132,7 +145,7 @@
           	  <form action="/page/modifierTicket.php" method="post" onsubmit="return deleteElements(this);">
           	   <input type="hidden" name="action" value="supprDetails">
           	   <input type="hidden" name="id" value="<?php echo $detailsTicket[0][0];?>">
-				<table class="table table-bordered rounded table-hover">
+				<table class="table table-bordered rounded table-hover" id="dataTable">
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col" class="">Type</th>

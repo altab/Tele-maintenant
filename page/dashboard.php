@@ -1,8 +1,5 @@
 <?php session_start();
-
-$_SESSION['origine'] = "/page/dashboard.php";
-if (!isset($_SESSION['login'])) header("Location:  http://".$_SERVER['SERVER_NAME']."/page/login.php");
-
+require_once '../includes/session.php';
 
 require_once '../DAO/connectDB.php';
 require_once '../metier/Societe.php';
@@ -17,5 +14,21 @@ require_once '../metier/Ticket.php';
 $sectionSubject = "Accueil";
 
 
+require_once '../DAO/connectDB.php';
+$connexion = new connectDB();
+
+$nbFromTicket = $connexion->countFromTableWhere('ticket','','');
+$nbTickets = $nbFromTicket['COUNT(*)'];
+
+$nbCloturesFromTicket = $connexion->countFromTableWhere('ticket','status',0);
+$nbCloturesTickets = $nbCloturesFromTicket['COUNT(*)'];
+
+$nbFromClient = $connexion->countFromTableWhere('societe','','');
+$nbClients = $nbFromClient['COUNT(*)'];
+
+$nbFromInterlocuteur = $connexion->countFromTableWhere('interlocuteur','','');
+$nbInterlocuteurs = $nbFromInterlocuteur['COUNT(*)'];
+
+$connexion = null;
 require_once '../vues/vDashboard.php';
 ?>

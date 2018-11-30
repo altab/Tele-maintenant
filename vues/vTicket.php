@@ -156,6 +156,7 @@
                               <th>Interlocuteur</th>
                               <th>Société</th>
                               <th>Status</th>
+                              <th>Operateur</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -176,6 +177,7 @@
                                   <td><?php echo $ticketSociete->NomFromInterlocuteurID ();?></td>
                                   <td><?php echo $ticketSociete->NomFromSocieteID ();?></td>
                                   <td><?php echo $status;?></td>
+                                  <td><?php echo $ticketSociete->NomFromUtilisateurID();?></td>
                                   <td class="align-center"><button type="submit" class="btn btn-primary text-white float-right"><i class="fas fa-arrow-circle-right"></i></button></td>
                                 </tr>
                             </form>

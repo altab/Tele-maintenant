@@ -7,9 +7,9 @@
       </button>
 
       <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="/metier/rechercher.php" method="get">
+      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="/page/rechercher.php" method="get">
         <div class="input-group">
-          <input type="text" name="recherche" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="formulaire-de-recherche">
+          <input type="text" name="recherche" class="form-control" placeholder="<?php if(isset($_GET['recherche']))echo $_GET['recherche']; else echo "Rechercher..."?>">
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
               <i class="fas fa-search"></i>

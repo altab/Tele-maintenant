@@ -37,7 +37,15 @@ class Ticket {
         
     }
     
-    
+    function NomFromUtilisateurID () {
+        require_once '../DAO/connectDB.php';
+        $connexion = new connectDB();
+        
+        $nomUtilisateurs = $connexion->selectFromWhere('nom,prenom','utilisateur','id', $this->getUtilisateurID());
+        
+        return $nomUtilisateurs[0]['prenom']." ".$nomUtilisateurs[0]['nom'];
+        
+    }
     
     
     

@@ -102,16 +102,16 @@
             </div>*/?>
           </div>
           <div class="card-body">
-          	<table class="table table-striped table-bordered table-hover">
+          	<table class="table table-striped table-bordered table-hover" id="dataTable">
               <thead>
                 <tr class="bg-info text-white text-dark">
-                  <th scope="col" class="col-1">ID</th>
-                  <th scope="col" class="col-1">Date</th>
-                  <th scope="col">Sujet</th>
-                  <th scope="col">Interlocuteur</th>
-                  <th scope="col" class="col-1">Société</th>
-                  <th scope="col" class="col-1">Status</th>
-                  <th scope="col" class="col-1">Action</th>
+                  <th scope="col" >ID</th>
+                  <th scope="col" >Date</th>
+                  <th scope="col" >Sujet</th>
+                  <th scope="col" >Interlocuteur</th>
+                  <th scope="col" >Société</th>
+                  <th scope="col" >Status</th>
+                  <th scope="col" >Action</th>
                 </tr>
               </thead>
               <tbody>

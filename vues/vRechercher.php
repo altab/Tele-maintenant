@@ -25,7 +25,7 @@
         <div class="container-fluid">
         <!-- Contenu -->
         
-        <p>ICI contenu</p>
+        <p> <?php if(isset($_GET['recherche']))echo "Recherche effectuée : <b>".$_GET['recherche']."</b>"; else "Pas de recherche en cours !"?></p>
         
         <!-- !Contenu -->
 		</div>

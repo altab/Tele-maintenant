@@ -288,5 +288,23 @@ class connectDB {
         
     }
     
+    function countFromTableWhere($table, $whereEl, $whereVal){
+        
+        //SELECT COUNT(*) FROM table
+        $pdo =  $this -> getConn();
+        
+        if(isset($whereEl) && $whereEl!= '') $where = " WHERE ".$whereEl."=".$whereVal;
+        else $where ='';
+        
+        $query = "SELECT COUNT(*) FROM  $table $where";
+        
+        // Prepare statement
+        $reponse = $pdo->query($query);
+        
+        $reponse =  $reponse ->fetch();
+        
+        return $reponse;
+    }
+    
 }
 ?>

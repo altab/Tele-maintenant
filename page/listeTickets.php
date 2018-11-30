@@ -1,7 +1,5 @@
 <?php session_start();
-
-$_SESSION['origine'] = "/page/listeTickets.php";
-if (!isset($_SESSION['login'])) header("Location:  http://".$_SERVER['SERVER_NAME']."/page/login.php");
+require_once '../includes/session.php';
 
 
 /**

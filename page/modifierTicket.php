@@ -1,9 +1,5 @@
 <?php session_start();
-
-$_SESSION['origine'] = "/page/modifierTicket.php";
-if (!isset($_SESSION['login'])) header("Location:  http://".$_SERVER['SERVER_NAME']."/page/login.php");
-if (isset($_SESSION['role'])) $statusUser = $_SESSION['role'];
-
+require_once '../includes/session.php';
 
 
 /**
@@ -58,10 +54,15 @@ if (isset($_GET['action']) && $_GET['action']=='modifierSujet') {
     $nouveauchamp = $_GET['modifier'];
     $connexion->updateRaw('ticket', 'status', $nouveauchamp, 'id', $idTicket);
     
-} elseif (isset($_GET['action']) && $_GET['action']=='modifierDate') {    
+} elseif (isset($_GET['action']) && $_GET['action']=='modifierDate') {
     
     $nouveauchamp = urldecode($_GET['modifier']);
     $connexion->updateRawDate('ticket', 'date', $nouveauchamp, 'id', $idTicket);
+    
+} elseif (isset($_GET['action']) && $_GET['action']=='modifierUtilisateur') {
+    
+    $nouveauchamp = urldecode($_GET['modifier']);
+    $connexion->updateRaw('ticket', 'utilisateurID', $nouveauchamp, 'id', $idTicket);
     
 } elseif (isset($_POST['action']) && $_POST['action']=='supprDetails'){
     
@@ -111,7 +112,7 @@ if (isset($idTicket)) {
 // On a pas de variable passé à la page
 else {
     
-    $afficher = "Pas de ticket selectionné !";
+    //$afficher = "Pas de ticket selectionné !";
     
 }
 echo $afficher;

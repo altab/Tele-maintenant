@@ -1,7 +1,6 @@
 <?php session_start();
+require_once '../includes/session.php';
 
-$_SESSION['origine'] = "/page/ticket.php";
-if (!isset($_SESSION['login'])) header("Location:  http://".$_SERVER['SERVER_NAME']."/page/login.php");
 
 /*
  * XXX SELECT * FROM interlocuteur left join societe on interlocuteur.societeID = societe.id 

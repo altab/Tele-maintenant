@@ -9,7 +9,7 @@
 
   </head>
 
-  <body class="bg-dark">
+  <body class="bg-image">
 
     <div class="container">
       <div class="card card-login mx-auto mt-5">
