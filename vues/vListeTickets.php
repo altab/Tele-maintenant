@@ -124,7 +124,15 @@
                   <td><?php echo $ticket->NomFromInterlocuteurID()?></td>
                   <td><?php echo $ticket->NomFromSocieteID()?></td>
                   <td><?php if ($ticket->getStatus()==0) echo "Cloturé"; else echo "En cours"; ?></td>
-                  <td>bouton a</td>
+                  <td>
+					<form action="/page/ticket.php#ajouterTicket" method="get">
+                        <input type="hidden" name="action" value="detailTicket" />
+                        <input type="hidden" name="interlocuteurID" value="<?php echo $ticket->getInterlocuteurID()?>" />
+                        <input type="hidden" name="societeID" value="<?php echo $ticket->getSocieteID() ?>" />
+                        <input type="hidden" name="ticketID" value="<?php echo $ticket->getId() ?>" />
+                        <button type="submit" class="btn btn-primary text-white float-right"><i class="fas fa-arrow-circle-right"></i></button>
+                    </form>
+                  </td>
                 </tr>
               <?php }?>  
               </tbody>

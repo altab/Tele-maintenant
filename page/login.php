@@ -10,7 +10,7 @@ require_once '../metier/Utilisateur.php';
 // recuperation des variables
 if (isset($_SESSION['origine']) && $_SESSION['origine'] != '')
     $origine = $_SESSION['origine'];
-else $origine = "";
+else $origine = '';
 
 if (isset($_POST['email']) && $_POST['email'] != '')
     $login = htmlentities(urldecode($_POST['email']));
@@ -19,15 +19,16 @@ if (isset($_POST['password']) && $_POST['password'] != '')
     $password = str_replace(' ', '', $_POST['password']);
 
 if (isset($_GET['quitter']) && $_GET['quitter'] == 'Deconnexion')
-    sessionDestroy();
+    sessionDestroy($origine);
 
 if (isset($login) && isset($password))     
     VerifLogin($login, $password, $origine);
 
-function sessionDestroy()
+    function sessionDestroy($origine)
 {
     session_unset(); // unset $_SESSION variable for this page
     session_destroy();
+    $_SESSION['origine'] = $origine;
 }
 
 function VerifLogin($login, $password, $origine)
@@ -62,5 +63,6 @@ function VerifLogin($login, $password, $origine)
     }
     $connexion = null; //fermeture de la connexion
 }
+
 
 require_once '../vues/vLogin.php';

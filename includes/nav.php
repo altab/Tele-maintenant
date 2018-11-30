@@ -21,14 +21,14 @@
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" >
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Paramètres</a>
+            <a class="dropdown-item" href="#"><i class="fas fa-cogs text-muted"></i> Paramètres</a>
             <div class="dropdown-divider"></div>
-            <form action="/page/login.php" method="get">
-				<input class="dropdown-item" type="submit" name="quitter" value="Deconnexion" data-toggle="modal" data-target="#logoutModal">
+            
+				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i class="far fa-times-circle text-muted"></i> Quitter</a>
 			</form>
           </div>
         </li>

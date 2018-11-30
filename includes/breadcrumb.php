@@ -1,5 +1,4 @@
 <?php 
-$url = $_SERVER['PHP_SELF'];
 if (!isset($sectionTitle)) $sectionTitle = ucfirst(basename($_SERVER['PHP_SELF'],'.php'));
 ?>
 <div class="container-fluid">

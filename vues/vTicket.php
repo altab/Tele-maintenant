@@ -29,9 +29,9 @@
             	<div class="col-6">
             	
             	<div class="card h-100">
-  					<h5 class="card-header  bg-primary text-white">1 - Recherche Société</h5>
+  					<div  class="card-header bg-primary text-white"><span class="h5">1 - Recherche Société</span> <a href="/page/clients.php" class="btn btn-light btn-sm mr-1 float-right">Ajouter</a></div>
                 	<div class="card-body">
-                        <form action="/page/ticket.php" method="get">
+                	  <form action="/page/ticket.php" method="get">
                     	<fieldset>    	
             			<legend>Informations</legend>
         					<div class="row">
@@ -52,12 +52,11 @@
                 		<div class="row mt-3 d-flex">
     						<div class="col-12">
     							<input class="btn bg-success float-right text-white" type="submit" value="Valider">
-    							<button class="btn btn-outline-primary mr-3 float-right">Ajouter</button>
     						</div>
     					</div>			
                 		<div class="clearfix"></div>
-                		</form>
-                     </div>
+                	</form>
+                   </div>
                 </div>
                             	
                 	
@@ -165,11 +164,7 @@
                                  if ($ticketSociete->getStatus() == 0) $status = "Cloturé"; else $status = "En cours";
                                  
                              ?>
-                             <form action="/page/ticket.php#ajouterTicket" method="get">
-                      			<input type="hidden" name="action" value="detailTicket" />
-                      			<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId()?>" />
-                      			<input type="hidden" name="societeID" value="<?php echo $ticketSociete->getSocieteID() ?>" />
-                                <input type="hidden" name="ticketID" value="<?php echo $ticketSociete->getId() ?>" />
+                             
                               	<tr>
                                   <td><?php echo $ticketSociete->getId();?></td>
                                   <td><?php echo $ticketSociete->getDate();?></td>
@@ -178,9 +173,17 @@
                                   <td><?php echo $ticketSociete->NomFromSocieteID ();?></td>
                                   <td><?php echo $status;?></td>
                                   <td><?php echo $ticketSociete->NomFromUtilisateurID();?></td>
-                                  <td class="align-center"><button type="submit" class="btn btn-primary text-white float-right"><i class="fas fa-arrow-circle-right"></i></button></td>
+                                  <td class="align-center">
+                                  	<form action="/page/ticket.php#ajouterTicket" method="get">
+                          			<input type="hidden" name="action" value="detailTicket" />
+                          			<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId()?>" />
+                          			<input type="hidden" name="societeID" value="<?php echo $ticketSociete->getSocieteID() ?>" />
+                                    <input type="hidden" name="ticketID" value="<?php echo $ticketSociete->getId() ?>" />
+                                  	<button type="submit" class="btn btn-primary text-white float-right"><i class="fas fa-arrow-circle-right"></i></button>
+                                  	</form>
+                                  	</td>
                                 </tr>
-                            </form>
+                            
                           	 <?php } ?>
                           </tbody>
                         </table>
