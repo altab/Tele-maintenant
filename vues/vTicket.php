@@ -29,7 +29,7 @@
             	<div class="col-6">
             	
             	<div class="card h-100">
-  					<div  class="card-header bg-primary text-white"><span class="h5">1 - Recherche Société</span> <a href="/page/clients.php" class="btn btn-light btn-sm mr-1 float-right">Ajouter</a></div>
+  					<div  class="card-header bg-primary text-white"><span class="h5">1 - Recherche Société</span> <a class="btn btn-light btn-sm mr-1 float-right" href="#" data-toggle="modal" data-target="#nouvelleSociete">Ajouter</a></div>
                 	<div class="card-body">
                 	  <form action="/page/ticket.php" method="get">
                     	<fieldset>    	
@@ -63,7 +63,11 @@
             	</div>
             	<div class="col-6">
             		<div class="card h-100">
-  					<h5 class="card-header bg-primary text-white">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo ucfirst($societeEnCours); ?></h5>
+  					<div class="card-header bg-primary text-white">
+  						<span class="h5">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo ucfirst($societeEnCours); ?>
+  					 	    <a class="btn btn-light btn-sm mr-1 float-right" href="#" data-toggle="modal" data-target="#nouvelInterlocuteur">Ajouter</a>
+  					 	</span>
+  					</div>
                 	<div class="card-body">
                         <form action="/page/ticket.php" method="get">
                          <?php if(isset($societeEnCours))echo "<input type='hidden' value='$societeEnCours' name='societeEnCours'/>"; ?> 
@@ -136,7 +140,7 @@
             </div>
             
             
-            <?php if(isset($interlocuteurEnCours) && $interlocuteurEnCours!= '') { ?>
+            <?php if(isset($tabTicketsSociete) && $tabTicketsSociete!= '') { ?>
             <div  class="row">
             	
             	<div class="card m-3 w-100">
@@ -176,7 +180,7 @@
                                   <td class="align-center">
                                   	<form action="/page/ticket.php#ajouterTicket" method="get">
                           			<input type="hidden" name="action" value="detailTicket" />
-                          			<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId()?>" />
+                          			<input type="hidden" name="interlocuteurID" value="<?php echo $ticketSociete->getInterlocuteurID()?>" />
                           			<input type="hidden" name="societeID" value="<?php echo $ticketSociete->getSocieteID() ?>" />
                                     <input type="hidden" name="ticketID" value="<?php echo $ticketSociete->getId() ?>" />
                                   	<button type="submit" class="btn btn-primary text-white float-right"><i class="fas fa-arrow-circle-right"></i></button>
@@ -208,14 +212,17 @@
                     </div>
                     	
                     <div class="card-body form-group">
+                    
+                    <?php if(isset($interlocuteurEnCours)) {?>
+                    
                    		<div  class="form-group">
                         	<form  class="form-inline"  action="/page/ticket.php#ajouterTicket" method="get">
                         		<input type="hidden" name="action" value="nouveauTicket">
                         		<input class="form-control col-10 mr-5" type="text" name="sujet" placeholder="Sujet du ticket" <?php 
                         		if (isset($statusTicket) && $statusTicket == 0 ) echo " disabled=\"disabled\"";
-                        		if (isset($sujetEnCours) ) echo " value=\"".ucfirst($sujetEnCours->getSujet())."\" ";
+                        		if (isset($sujetEnCours)) echo " value=\"".ucfirst($sujetEnCours->getSujet())."\" ";
                         		?>>
-                        		<input type="hidden" name="interlocuteurID" value="<?php echo $interlocuteurEnCours->getId(); ?>">
+                        		<input type="hidden" name="interlocuteurID" value="<?php  echo $interlocuteurEnCours->getId(); ?>">
                         		<input type="hidden" name="societeID" value="<?php echo recupSocieteIdFromNom($societeEnCours); ?>">
                         		<input class="btn btn-primary ml-5" type="submit" value="Créer" <?php 
                         		if (isset($sujetEnCours) ) echo " disabled=\"disabled\"";
@@ -251,10 +258,11 @@
                                 <button type="submit" class="btn btn-success float-right" <?php if ($statusTicket == 0 ) echo " disabled=\"disabled\""; ?>>Enregistrer informations</button>
                              </form>
                         <?php }?>	
-                    	
+                    <?php } else echo "Vous devez selectionner un interlocuteur pour saisir un nouveau ticket !"?>	
                     </div>
                 </div>
               </div>
+            
             <?php if (isset($sujetEnCours))  { ?>  
             <div  class="row">
             	
@@ -329,6 +337,40 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+    
+    <!-- Nouveau client Modal-->
+        <div class="modal fade" id="nouvelleSociete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-industry text-primary"></i> Nouvelle Société</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              	<?php require_once '../includes/nouveauClient.php';?>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Nouvel Interlocuteur Modal-->
+        <div class="modal fade" id="nouvelInterlocuteur" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-user text-primary"></i> Nouvel Interlocuteur</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              	<?php require_once '../includes/nouvelInterlocuteur.php';?>
+              </div>
+            </div>
+          </div>
+        </div>
 
 	<?php require_once '../includes/modal.php';?>
 	

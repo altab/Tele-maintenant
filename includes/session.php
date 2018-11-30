@@ -8,3 +8,4 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     header("Location:  http://".$_SERVER['SERVER_NAME']."/page/login.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // mise à jour du timestamp
+if (isset($_SESSION['role'])&&$_SESSION['role']!='') $statusUser = $_SESSION['role'];

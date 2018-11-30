@@ -39,3 +39,7 @@ td.align-center { width: 74px;}
 	background-repeat: no-repeat; /* Do not repeat the image */
 	background-size: cover; /* Resize the background image to cover the entire container */
 }
+
+.prependPhilippe {
+	width: 100px;
+}

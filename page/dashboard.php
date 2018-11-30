@@ -1,6 +1,7 @@
 <?php session_start();
 require_once '../includes/session.php';
 
+
 require_once '../DAO/connectDB.php';
 require_once '../metier/Societe.php';
 require_once '../metier/Interlocuteur.php';

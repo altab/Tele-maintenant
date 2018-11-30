@@ -47,17 +47,18 @@ class connectDB {
     }
     
     
-    function insertTicket($sujet, $iID, $socID, $status) {
+    function insertTicket($sujet, $iID, $socID, $status, $uID) {
         
         $pdo =  $this -> getConn();
         $today = date("Y-m-d"); 
         
-        $preparedStatement =  $pdo -> prepare("INSERT INTO ticket( sujet, interlocuteurID, societeID, status, date) VALUES (?,?,?,?,?)");
+        $preparedStatement =  $pdo -> prepare("INSERT INTO ticket (sujet, interlocuteurID, societeID, status, date, utilisateurID) VALUES (?,?,?,?,?,?)");
         $preparedStatement->bindParam(1, $sujet);
         $preparedStatement->bindParam(2, $iID);
         $preparedStatement->bindParam(3, $socID);
         $preparedStatement->bindParam(4, $status);
         $preparedStatement->bindParam(5, $today);
+        $preparedStatement->bindParam(6, $uID);
         $preparedStatement->execute();
         $preparedStatement->closeCursor();
         
@@ -73,6 +74,20 @@ class connectDB {
         $preparedStatement->bindParam(2, $today);
         $preparedStatement->bindParam(3, $type);
         $preparedStatement->bindParam(4, $ticketID);
+        $preparedStatement->execute();
+        $preparedStatement->closeCursor();
+        
+    }
+    
+    function insertSociete($nom, $adresse, $telephone, $email) {
+        
+        $pdo =  $this -> getConn();
+        
+        $preparedStatement =  $pdo -> prepare("INSERT INTO societe( nom, adresse, telephone, email) VALUES (?,?,?,?)");
+        $preparedStatement->bindParam(1, $nom);
+        $preparedStatement->bindParam(2, $adresse);
+        $preparedStatement->bindParam(3, $telephone);
+        $preparedStatement->bindParam(4, $email);
         $preparedStatement->execute();
         $preparedStatement->closeCursor();
         
@@ -206,7 +221,7 @@ class connectDB {
         //SELECT id FROM ticket WHERE interlocuteurID=2 ORDER BY id DESC LIMIT 0,1
         $pdo =  $this -> getConn();
         
-        $query = "SELECT id FROM $table WHERE $champ=$id ORDER BY id DESC LIMIT 0,1";
+        $query = "SELECT id FROM $table WHERE $champ='$id' ORDER BY id DESC LIMIT 0,1";
         
         $reponse = $pdo->query($query);
         

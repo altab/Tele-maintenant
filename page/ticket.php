@@ -35,7 +35,7 @@ $sujetEnCours;
 $detailEnCours;
 $actionEnCours;
 $statusTicket;
-
+$utilisateur = $_SESSION['utilisateurID'];
 
 
 if (!isset($_GET['societe'])) {
@@ -74,6 +74,8 @@ if (isset($_GET['societe']) && $_GET['societe'] != '') {
         $interlocuteurs[] = new Interlocuteur($value['id'], $value['nom'], $value['prenom'], $value['telephone'], $value['email'], $value['societeID']);
         
     }
+    
+    $tabTicketsSociete = tabTicketBySocieteByUser($socID,'');
 
 }
 // Formulaire de recherche Interlocuteur
@@ -163,6 +165,7 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauTicket')
        $societeEnCours = $querySocieteID[0]['nom'];
        
        $interlocuteurIdPost = $_GET['interlocuteurID'];
+       
        $tabInterlocuteurs =  $connexion->selectFromWhere('*', 'interlocuteur',  'id', $interlocuteurIdPost);
        $interlocuteurEnCours = new Interlocuteur($tabInterlocuteurs[0]['id'], $tabInterlocuteurs[0]['nom'], $tabInterlocuteurs[0]['prenom'], $tabInterlocuteurs[0]['telephone'], $tabInterlocuteurs[0]['email'], $tabInterlocuteurs[0]['societeID']);
 
@@ -174,7 +177,8 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauTicket')
         */
        
        $sujet = $_GET['sujet'];
-       $connexion -> insertTicket($sujet, $interlocuteurIdPost, $societeIDPost, 1);
+       
+       $connexion -> insertTicket($sujet, $interlocuteurIdPost, $societeIDPost, 1, $utilisateur);
        
        $ticketID = $connexion ->  selectLastId('ticket', 'interlocuteurID', $interlocuteurIdPost);
        $ticketID = $ticketID['id'];
@@ -283,7 +287,7 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
             $queryTicketID[0]['societeID'],
             $queryTicketID[0]['status'],
             $queryTicketID[0]['date'],
-            $queryTicketID[0]['utiliateurID']);
+            $queryTicketID[0]['utilisateurID']);
         
         $statusTicket = $sujetEnCours->getStatus();
         /*
@@ -338,7 +342,7 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
         $queryTicketID[0]['societeID'],
         $queryTicketID[0]['status'],
         $queryTicketID[0]['date'],
-        $queryTicketID[0]['utiliateurID']);
+        $queryTicketID[0]['utilisateurID']);
     
     $statusTicket = $sujetEnCours->getStatus();
     /*
@@ -452,7 +456,10 @@ function tabTicketBySocieteByUser($socID,$interlocuteurEnCoursId) {
     
     $connexion = new connectDB();
     
-    $tabTickets =  $connexion->selectFromWhereAnd('*', 'ticket', 'societeID', $socID, 'interlocuteurID', $interlocuteurEnCoursId);
+    if(isset($interlocuteurEnCoursId)&&$interlocuteurEnCoursId!='')  $tabTickets =  $connexion->selectFromWhereAnd('*', 'ticket', 'societeID', $socID, 'interlocuteurID', $interlocuteurEnCoursId);
+    else $tabTickets =  $connexion->selectFromWhere('*', 'ticket', 'societeID', $socID);
+    
+   
     $tabTicketsSociete;
     
     if ($tabTickets) {

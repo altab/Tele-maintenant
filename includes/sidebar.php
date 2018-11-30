@@ -21,7 +21,12 @@
             </li>
         <li class="nav-item">
           <a class="nav-link" href="/page/clients.php">
+            <i class="fas fa-fw fa-industry"></i>
+            <span>Sociétés</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/page/interlocuteurs.php">
             <i class="fas fa-fw fa-users"></i>
-            <span>Clients</span></a>
+            <span>Interlocuteurs</span></a>
         </li>
       </ul>
