@@ -35,7 +35,7 @@ $sujetEnCours;
 $detailEnCours;
 $actionEnCours;
 $statusTicket;
-$utilisateur = $_SESSION['utilisateurID'];
+$utilisateurID = $_SESSION['utilisateurID'];
 
 
 if (!isset($_GET['societe'])) {
@@ -178,7 +178,7 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauTicket')
        
        $sujet = $_GET['sujet'];
        
-       $connexion -> insertTicket($sujet, $interlocuteurIdPost, $societeIDPost, 1, $utilisateur);
+       $connexion -> insertTicket($sujet, $interlocuteurIdPost, $societeIDPost, 1, $utilisateurID);
        
        $ticketID = $connexion ->  selectLastId('ticket', 'interlocuteurID', $interlocuteurIdPost);
        $ticketID = $ticketID['id'];
@@ -294,7 +294,7 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
          * Etape 3 - on ajoute le detail en base
          */
         $info =  $_GET['detail'];
-        $connexion -> insertDetail(0, $info, $sujetEnCours->getId()) ;
+        $connexion -> insertDetail(0, $info, $sujetEnCours->getId(), $utilisateurID) ;
         
         
         $sujetId = $sujetEnCours->getId();
@@ -316,7 +316,12 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
     
     $interlocuteurIdPost = $_GET['interlocuteurID'];
     $tabInterlocuteurs =  $connexion->selectFromWhere('*', 'interlocuteur',  'id', $interlocuteurIdPost);
-    $interlocuteurEnCours = new Interlocuteur($tabInterlocuteurs[0]['id'], $tabInterlocuteurs[0]['nom'], $tabInterlocuteurs[0]['prenom'], $tabInterlocuteurs[0]['telephone'], $tabInterlocuteurs[0]['email'], $tabInterlocuteurs[0]['societeID']);
+    $interlocuteurEnCours = new Interlocuteur($tabInterlocuteurs[0]['id'], 
+                                                $tabInterlocuteurs[0]['nom'], 
+                                                $tabInterlocuteurs[0]['prenom'], 
+                                                $tabInterlocuteurs[0]['telephone'], 
+                                                $tabInterlocuteurs[0]['email'], 
+                                                $tabInterlocuteurs[0]['societeID']);
     
     //on recupere tous les tickets de la société
     $tabTicketsSociete = tabTicketBySocieteByUser($societeIDPost, $interlocuteurIdPost);

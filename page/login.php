@@ -48,6 +48,7 @@ function VerifLogin($login, $password, $origine)
             $_SESSION['login'] = $utilisateur->getEmail();
             $_SESSION['role'] = $utilisateur->getRole();
             $_SESSION['utilisateurID'] = $utilisateur->getId();
+            $_SESSION['nomUtilisateur'] = $utilisateur->getPrenom();
             $_SESSION['LAST_ACTIVITY'];
             
             if (isset($origine)) $urlOrigine = $origine; else $urlOrigine = '';

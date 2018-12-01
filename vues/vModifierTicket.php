@@ -150,8 +150,9 @@
                     <tr>
                       <th scope="col" class="">Type</th>
                    	  <th scope="col" class="">ID</th>
+                   	  <th scope="col" class="">Op</th>
                       <th scope="col" class="">Date</th>
-                      <th scope="col" class="col-8">Valeur</th>
+                      <th scope="col" class="">Valeur</th>
                       <th scope="col" class="">Supprimer</th>
                     </tr>
                   </thead>
@@ -162,16 +163,19 @@
                       if($detailTicket['type'] == 0) $type = "<span class=\"text-warning\">Détail</span>";
                       else $type ="<span class=\"text-primary\">Action</span>";
                       
+                      $detail  = new Detail($detailTicket['id'], $detailTicket['info'], $detailTicket['date'], $detailTicket['ticketID'], $detailTicket['utilisateurID']);
+                      
                   ?>
 					<tr>
 						<th  scope="row"><label for="detailID-<?php echo $detailTicket['id']?>"><?php echo $type?></label></th>
-						<td><label for="detailID-<?php echo $detailTicket['id']?>"><?php echo $detailTicket['id']?></label></td>
-						<td><label for="detailID-<?php echo $detailTicket['id']?>"><?php echo $detailTicket['date']?></label></td>
-						<td><label for="detailID-<?php echo $detailTicket['id']?>"><?php echo $detailTicket['info']?></label></td>
+						<td><label for="detailID-<?php echo $detail->getId()?>"><?php echo $detail->getId()?></label></td>
+						<td><label for="detailID-<?php echo $detail->getId()?>"><?php echo $detail->getUtilisateurID()?></label></td>
+						<td><label for="detailID-<?php echo $detail->getId()?>"><?php echo $detail->getDate()?></label></td>
+						<td><label for="detailID-<?php echo $detail->getId()?>"><?php echo $detail->getInfo()?></label></td>
 						<td>
 							<div class="custom-control custom-checkbox">
-								<input class="custom-control-input" type="checkbox" name="detailID[<?php echo $detailTicket['id']?>]" value="<?php echo $detailTicket['id']?>" id="detailID-<?php echo $detailTicket['id']?>"  <?php if(!isset($statusUser) || $statusUser==0) echo" disabled";?> />
-								<label class="custom-control-label" for="detailID-<?php echo $detailTicket['id']?>"></label>
+								<input class="custom-control-input" type="checkbox" name="detailID[<?php echo $detail->getId()?>]" value="<?php echo $detailTicket['id']?>" id="detailID-<?php echo $detail->getId()?>"  <?php if(!isset($statusUser) || $statusUser==0) echo" disabled";?> />
+								<label class="custom-control-label" for="detailID-<?php echo $detail->getId()?>"></label>
 							</div>
 						</td>
 					</tr>
@@ -182,7 +186,7 @@
                   </tbody>
                    <tfoot class=" bg-light">
                      <tr>
-                       <td colspan="5"><button type="submit" class="btn btn-danger float-right" <?php if(!isset($statusUser) || $statusUser==0) echo" disabled";?>><i class="fas fa-eraser"></i> Supprimer</button></td>
+                       <td colspan="6"><button type="submit" class="btn btn-danger float-right" <?php if(!isset($statusUser) || $statusUser==0) echo" disabled";?>><i class="fas fa-eraser"></i> Supprimer</button></td>
                      </tr>
                    </tfoot>
                 </table>

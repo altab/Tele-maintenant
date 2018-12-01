@@ -13,7 +13,7 @@ require_once '../metier/Ticket.php';
  */
 
 $sectionSubject = "Accueil";
-
+$utilisateurID = $_SESSION['utilisateurID'];
 
 require_once '../DAO/connectDB.php';
 $connexion = new connectDB();
@@ -29,6 +29,41 @@ $nbClients = $nbFromClient['COUNT(*)'];
 
 $nbFromInterlocuteur = $connexion->countFromTableWhere('interlocuteur','','');
 $nbInterlocuteurs = $nbFromInterlocuteur['COUNT(*)'];
+
+
+$tabTicketsOperateur;
+
+
+//$listeTicketsOperateur = $listeTicketsOperateur1 + $listeTicketsOperateur2;
+// construction du tableau des tickets en cours pour l'utilisateur
+
+
+    
+$listeTicketsOperateur2 = $connexion->selectFromWhereAnd('*', 'ticket', 'utilisateurID', $utilisateurID, 'status', '1');
+    
+foreach ($listeTicketsOperateur2 as $ticketsOperateur)
+    $tabTicketsOperateur[] = new Ticket($ticketsOperateur['id'],
+        $ticketsOperateur['sujet'],
+        $ticketsOperateur['interlocuteurID'],
+        $ticketsOperateur['societeID'],
+        $ticketsOperateur['status'],
+        $ticketsOperateur['date'],
+        $ticketsOperateur['utilisateurID']);
+
+    $listeTicketsOperateur1 = $connexion->selectFromWhere('*', 'ticket', 'utilisateurID', '99999', 'status', '2');
+    
+    
+    foreach ($listeTicketsOperateur1 as $ticketsOperateur)
+        $tabTicketsOperateur[] = new Ticket($ticketsOperateur['id'],
+            $ticketsOperateur['sujet'],
+            $ticketsOperateur['interlocuteurID'],
+            $ticketsOperateur['societeID'],
+            $ticketsOperateur['status'],
+            $ticketsOperateur['date'],
+            $ticketsOperateur['utilisateurID']);
+
+    rsort($tabTicketsOperateur);
+
 
 $connexion = null;
 require_once '../vues/vDashboard.php';

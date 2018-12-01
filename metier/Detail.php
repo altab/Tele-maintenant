@@ -2,16 +2,30 @@
 
 class Detail {
     
-    private $id,$info,$date,$ticketID;
+    private $id,$info,$date,$ticketID,$utilisateurID;
     
-    function __construct($id,$info,$date,$ticketID) {
+    function __construct($id,$info,$date,$ticketID,$utilisateurID) {
         
         $this->setId($id);
         $this->setInfo($info);
         $this->setDate($date);
         $this->setTicketID($ticketID);
+        $this->setUtilisateurID($utilisateurID);
         
     }
+    
+    function NomFromUtilisateurID () {
+        require_once '../DAO/connectDB.php';
+        $connexion = new connectDB();
+        
+        $nomUtilisateurs = $connexion->selectFromWhere('nom,prenom','utilisateur','id', $this->getUtilisateurID());
+        
+        return $nomUtilisateurs[0]['prenom']." ".$nomUtilisateurs[0]['nom'];
+        
+    }
+    
+    
+    
     /**
      * @return mixed
      */
@@ -42,6 +56,22 @@ class Detail {
     public function getTicketID()
     {
         return $this->ticketID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUtilisateurID()
+    {
+        return $this->utilisateurID;
+    }
+
+    /**
+     * @param mixed $utilisateurID
+     */
+    private function setUtilisateurID($utilisateurID)
+    {
+        $this->utilisateurID = $utilisateurID;
     }
 
     /**

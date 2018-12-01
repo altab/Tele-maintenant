@@ -13,6 +13,7 @@ require_once '../DAO/connectDB.php';
 require_once '../metier/Societe.php';
 require_once '../metier/Interlocuteur.php';
 require_once '../metier/Ticket.php';
+require_once '../metier/Detail.php';
 
 /*
  * Traitements base de données

@@ -64,16 +64,17 @@ class connectDB {
         
     }
     
-    function insertDetail($type,$info,$ticketID) {
+    function insertDetail($type,$info,$ticketID, $utilisateurID) {
         
         $pdo =  $this -> getConn();
         $today = date("Y-m-d");
         
-        $preparedStatement =  $pdo -> prepare("INSERT INTO ticketinfo( info, date, type, ticketID) VALUES (?,?,?,?)");
+        $preparedStatement =  $pdo -> prepare("INSERT INTO ticketinfo( info, date, type, ticketID, utilisateurID) VALUES (?,?,?,?,?)");
         $preparedStatement->bindParam(1, $info);
         $preparedStatement->bindParam(2, $today);
         $preparedStatement->bindParam(3, $type);
         $preparedStatement->bindParam(4, $ticketID);
+        $preparedStatement->bindParam(5, $utilisateurID);
         $preparedStatement->execute();
         $preparedStatement->closeCursor();
         
@@ -146,6 +147,64 @@ class connectDB {
     }
     
     /**
+     * Select avec une clause de recherche sur une colonne null. <br>
+     * $whereEl et $whereVal peuvent etre vides
+     * ex : SELECT * FROM `ticket` WHERE utilisateurID IS NULL<br>
+     *      SELECT * FROM `ticket` WHERE `societeID`=1 AND utilisateurID IS NULL 
+     * @param  $element
+     * @param  $table
+     * @param  $whereEl
+     * @param  $whereVal
+     * @param  $colIsNull
+     * @return NULL|mixed
+     */
+    function selectFromWhereNull($element,$table,$whereEl, $whereVal, $colIsNull) {
+        
+        if((isset($whereEl) && $whereEl != '') && (isset($whereVal) && $whereVal != '')) $where = " WHERE ".$whereEl."='".$whereVal."' AND $colIsNull IS NULL";
+        else $where = "WHERE $colIsNull IS NULL";
+        
+        $isNull = 
+        
+        $pdo =  $this -> getConn();
+        
+        $query = "SELECT ".$element." FROM ".$table.$where;
+        $reponse = $pdo->query($query);
+        
+        $reponses = NULL;
+        while($message = $reponse->fetch()) {
+            
+            $reponses[] = $message;
+            
+        }
+        
+        return $reponses;
+        
+    }
+    
+    function selectFromWhereSorted($element,$table,$whereEl, $whereVal, $sortCol,$sortBy) {
+        
+        if((isset($whereEl) && $whereEl != '') && (isset($whereVal) && $whereVal != '')) $where = " WHERE ".$whereEl."='".$whereVal."'";
+        else $where = '';
+        
+        $sorted = " ORDER BY ".$sortCol." ".$sortBy;
+        
+        $pdo =  $this -> getConn();
+        
+        $query = "SELECT ".$element." FROM ".$table.$where.$sorted;
+        $reponse = $pdo->query($query);
+        
+        $reponses = NULL;
+        while($message = $reponse->fetch()) {
+            
+            $reponses[] = $message;
+            
+        }
+        
+        return $reponses;
+        
+    }
+    
+    /**
      * selectFromWhereAnd($element,$table,$whereEl, $whereVal, $whereElAnd, $whereValAnd)
      * @param  $element
      * @param  $table
@@ -165,7 +224,7 @@ class connectDB {
         $pdo =  $this -> getConn();
         
         $query = "SELECT ".$element." FROM ".$table.$where;
-        
+
         $reponse = $pdo->query($query);
         
         $reponses = NULL;

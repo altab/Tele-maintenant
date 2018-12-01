@@ -24,14 +24,16 @@
         
         <div class="container-fluid">
         <!-- Contenu -->
-        
+        	
            	<div class="row">
+           	
             	<div class="col-6">
             	
             	<div class="card h-100">
   					<div  class="card-header bg-primary text-white"><span class="h5">1 - Recherche Société</span> <a class="btn btn-light btn-sm mr-1 float-right" href="#" data-toggle="modal" data-target="#nouvelleSociete">Ajouter</a></div>
+                	
                 	<div class="card-body">
-                	  <form action="/page/ticket.php" method="get">
+                	<form action="/page/ticket.php" method="get" id="selectSoc">
                     	<fieldset>    	
             			<legend>Informations</legend>
         					<div class="row">
@@ -47,20 +49,23 @@
                                         </datalist>
         						</div>
         					</div>
-                		</fieldset>	
-                		
-                		<div class="row mt-3 d-flex">
-    						<div class="col-12">
-    							<input class="btn bg-success float-right text-white" type="submit" value="Valider">
-    						</div>
-    					</div>			
+                		</fieldset>	</form>			
                 		<div class="clearfix"></div>
-                	</form>
+                	
                    </div>
+                   <div class="card-footer">
+                   		<div class="col-12">
+    						<input form="selectSoc" class="btn bg-success float-right text-white" type="submit" value="Valider">
+    					</div>
+    					
+                   </div>
+                   
                 </div>
+                
                             	
                 	
             	</div>
+            	
             	<div class="col-6">
             		<div class="card h-100">
   					<div class="card-header bg-primary text-white">
@@ -68,15 +73,15 @@
   					 	    <a class="btn btn-light btn-sm mr-1 float-right" href="#" data-toggle="modal" data-target="#nouvelInterlocuteur">Ajouter</a>
   					 	</span>
   					</div>
+  					<form action="/page/ticket.php" method="get">
+                         <?php if(isset($societeEnCours))echo "<input type='hidden' value='$societeEnCours' name='societeEnCours'/>"; ?>
                 	<div class="card-body">
-                        <form action="/page/ticket.php" method="get">
-                         <?php if(isset($societeEnCours))echo "<input type='hidden' value='$societeEnCours' name='societeEnCours'/>"; ?> 
                     	<fieldset>    	
             			<legend>Informations</legend>
         					<div class="row">
         						<label class="col-4 col-form-label" for="nom"> Nom :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listeNom" id="nom"  name="nomInterlocuteur" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getNom()."'"; ?>>
+                                   	<input class="form-control" list="listeNom" id="nomInterlocuteur"  name="nomInterlocuteur" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getNom()."'"; ?>>
                                    	  	<datalist id="listeNom">
                                           <?php foreach ($interlocuteurs as $interlocuteur) {
                                              echo "<option value='".$interlocuteur -> getNom()."' label='".$interlocuteur -> getNom()."'></option>\n";
@@ -88,7 +93,7 @@
         					<div class="row my-2">
         						<label class="col-4 col-form-label" for="prenom"> Prénom :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listePrenom" id="prenom"  name="prenomInterlocuteur" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getPrenom()."'"; ?>>
+                                   	<input class="form-control" list="listePrenom" id="prenomInterlocuteur"  name="prenomInterlocuteur" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getPrenom()."'"; ?>>
                                    	  	<datalist id="listePrenom">
                                           <?php foreach ($interlocuteurs as $interlocuteur) {
                                               echo "<option value='".$interlocuteur-> getPrenom()."' label='".$interlocuteur-> getPrenom()."'></option>\n";
@@ -100,7 +105,7 @@
         					<div class="row my-2">
         						<label class="col-4 col-form-label" for="telephone" > Téléphone :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listeTelephone" id="telephone" name="telephone" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getTelephone()."'"; ?>>
+                                   	<input class="form-control" list="listeTelephone" id="telephoneInterlocuteur" name="telephone" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getTelephone()."'"; ?>>
                                    	<datalist id="listeTelephone">
                                       <?php foreach ($interlocuteurs as $interlocuteur) {
                                               echo "<option value='".$interlocuteur-> getTelephone()."' label='".$interlocuteur-> getTelephone()."'></option>\n";
@@ -112,7 +117,7 @@
         					<div class="row">
         						<label class="col-4 col-form-label" for="email" > Email :</label>
                                	<div class="col-8">
-                                   	<input class="form-control" list="listeEmail" id="email" name="email"<?php if(isset($interlocuteurEnCours))echo " value='".$interlocuteurEnCours->getEmail()."'"; ?>>
+                                   	<input class="form-control" list="listeEmail" id="emailInterlocuteur" name="email"<?php if(isset($interlocuteurEnCours))echo " value='".$interlocuteurEnCours->getEmail()."'"; ?>>
                                    	<datalist id="listeEmail">
                                       <?php foreach ($interlocuteurs as $interlocuteur) {
                                               echo "<option value='".$interlocuteur-> getEmail()."' label='".$interlocuteur-> getEmail()."'></option>\n";
@@ -123,17 +128,16 @@
         					
         					
                 		</fieldset>
-                		<div class="row mt-3">
-    						<div class="col-12">
-    							<input class="btn bg-success float-right text-white" type="submit" value="Valider">
-    							<button class="btn btn-outline-primary mr-3 float-right">Ajouter</button>
-    						</div>
-    					</div>			
+                			
                 		
                 		<div class="clearfix"></div>
-                		</form>
-                		
                      </div>
+                     <div class="card-footer">
+    					<div class="col-12">
+    						<input class="btn bg-success float-right text-white" type="submit" value="Valider">
+    					</div>		
+                     </div>
+                     </form>
                 </div>
             	
             	</div>
