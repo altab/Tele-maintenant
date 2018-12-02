@@ -50,10 +50,10 @@ foreach ($listeTicketsOperateur2 as $ticketsOperateur)
         $ticketsOperateur['date'],
         $ticketsOperateur['utilisateurID']);
 
-    $listeTicketsOperateur1 = $connexion->selectFromWhere('*', 'ticket', 'utilisateurID', '99999', 'status', '2');
+$listeTicketsOperateur1 = $connexion->selectFromWhere('*', 'ticket', 'utilisateurID', '99999', 'status', '2');
     
     
-    foreach ($listeTicketsOperateur1 as $ticketsOperateur)
+foreach ($listeTicketsOperateur1 as $ticketsOperateur)
         $tabTicketsOperateur[] = new Ticket($ticketsOperateur['id'],
             $ticketsOperateur['sujet'],
             $ticketsOperateur['interlocuteurID'],
@@ -62,7 +62,7 @@ foreach ($listeTicketsOperateur2 as $ticketsOperateur)
             $ticketsOperateur['date'],
             $ticketsOperateur['utilisateurID']);
 
-    rsort($tabTicketsOperateur);
+rsort($tabTicketsOperateur);
 
 
 $connexion = null;

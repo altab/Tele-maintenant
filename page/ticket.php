@@ -408,7 +408,7 @@ elseif ((isset($_POST['action']) && $_POST['action'] == 'changerStatusTicket') )
         $queryTicketID[0]['societeID'],
         $queryTicketID[0]['status'],
         $queryTicketID[0]['date'],
-        $queryTicketID[0]['utiliateurID']);
+        $queryTicketID[0]['utilisateurID']);
     
     
     
@@ -434,7 +434,7 @@ elseif ((isset($_POST['action']) && $_POST['action'] == 'changerStatusTicket') )
         $queryTicketID[0]['societeID'],
         $queryTicketID[0]['status'],
         $queryTicketID[0]['date'],
-        $queryTicketID[0]['utiliateurID']);
+        $queryTicketID[0]['utilisateurID']);
     $statusTicket = $sujetEnCours->getStatus();
     
     //on recupere tous les tickets de la société
