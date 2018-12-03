@@ -60,6 +60,7 @@ $connexion = null;
 						<?php  if(isset($InterlocuteurModif)) echo " value='".$InterlocuteurModif->getPrenom()."' ";?>
 						placeholder="Entrer le prénom de l'interlocuteur (Obligatoire)" required>
 				</div>
+				<!--  !Nouvel Interlocuteur -->
 
 				<div class="input-group mt-3">
 					<div class="input-group-prepend">

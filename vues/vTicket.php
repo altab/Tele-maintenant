@@ -72,13 +72,13 @@
 				</div>
 
 				<div class="col-6">
-				<form action="/page/ticket.php" method="get">
-					<div class="card h-100">
-						<div class="card-header bg-primary text-white">
-							<span class="h5">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo ucfirst($societeEnCours); ?>
+					<form action="/page/ticket.php" method="get">
+						<div class="card h-100">
+							<div class="card-header bg-primary text-white">
+								<span class="h5">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo ucfirst($societeEnCours); ?>
   					 	    <a class="btn btn-light btn-sm mr-1 float-right" href="#" data-toggle="modal" data-target="#nouvelInterlocuteur">Ajouter</a>
-							</span>
-						</div>
+								</span>
+							</div>
 						
                          <?php if(isset($societeEnCours))echo "<input type='hidden' value='$societeEnCours' name='societeEnCours'/>"; ?>
                 	<div class="card-body">
@@ -157,14 +157,13 @@
 									<input class="btn bg-success float-right text-white" type="submit" value="Valider">
 								</div>
 							</div>
-						
-					</div>
+
+						</div>
 					</form>
 				</div>
 			</div>
             
             
-            <?php if(isset($tabTicketsSociete) && $tabTicketsSociete!= '') { ?>
             <div class="row">
 
 				<div class="card m-3 w-100">
@@ -193,10 +192,12 @@
                              <?php
 
                     foreach ($tabTicketsSociete as $ticketSociete) {
-                        if ($ticketSociete->getStatus() == 0)
+                        
+                        if ($ticketSociete->getStatus() == 0) {
                             $status = "Cloturé";
-                        else
+                        } else {
                             $status = "En cours";
+                        }
 
                         ?>
                              
@@ -222,8 +223,7 @@
                           	 <?php } ?>
                           </tbody>
 							</table>
-							</form>
-                        <?php } else echo "<p class='text-danger text-center'>Aucun ticket pour cet interlocuteur !</p>"; ?>
+                        <?php } else { echo "<p class='text-danger text-center'>Aucun ticket pour cet interlocuteur !</p>";} ?>
                       </div>
 					</div>
 				</div>
@@ -271,7 +271,7 @@
                     if (isset($detailEnCours)) {
                         $index = 0;
                         foreach ($detailEnCours as $detail) {
-                            echo "<ul><li><b>". $detail->getDate() . "</b> : " . $detail-> getInfo(). " <span class='font-weight-light text-mini'>[".$detail->NomFromUtilisateurID ()."]</span>\n";
+                            echo "<ul><li><b>" . $detail->getDate() . "</b> : " . $detail->getInfo() . " <span class='font-weight-light text-mini'>[" . $detail->NomFromUtilisateurID() . "]</span>\n";
                             $index ++;
                         }
                         for ($i = 0; $i < $index; $i ++) {
@@ -315,7 +315,7 @@
                     if (isset($actionEnCours)) {
                         $index = 0;
                         foreach ($actionEnCours as $detail) {
-                            echo "<ul><li><b>" . $detail->getDate() . "</b> : " . $detail->getInfo() . " <span class='font-weight-light text-mini'>[".$detail->NomFromUtilisateurID ()."]</span>\n";
+                            echo "<ul><li><b>" . $detail->getDate() . "</b> : " . $detail->getInfo() . " <span class='font-weight-light text-mini'>[" . $detail->NomFromUtilisateurID() . "]</span>\n";
                             $index ++;
                         }
                         for ($i = 0; $i < $index; $i ++) {
@@ -359,7 +359,6 @@
 			</form>
               <?php }?>         
             
-            	<?php } //!if interlocuteur?>
         <!-- !Contenu -->
 		</div>
         

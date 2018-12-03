@@ -8,9 +8,9 @@ $connexion = new connectDB();
  * Gestion des tickets - Opreations de traitement
  * @author Philippe Cohen
  */
-$sectionSubject = "Nouveau";
+$sectionSubject = "Administrateur";
 
 
 
-require_once '../vues/vDashboard.php';
+require_once '../vues/vadministrateur.php';
 ?>

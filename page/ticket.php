@@ -70,10 +70,10 @@ if (isset($_GET['societe']) && $_GET['societe'] != '') {
     
     // On reinitialise le tableu avant d'y mettre les interlocuteurs d'une seule société
     $interlocuteurs = null;
-   foreach ($tabInterlocuteurs as $value) {
-
-        $interlocuteurs[] = new Interlocuteur($value['id'], $value['nom'], $value['prenom'], $value['telephone'], $value['email'], $value['societeID']);
-        
+    if(isset($tabInterlocuteurs)) {
+       foreach ($tabInterlocuteurs as $value) {
+            $interlocuteurs[] = new Interlocuteur($value['id'], $value['nom'], $value['prenom'], $value['telephone'], $value['email'], $value['societeID']);
+        }
     }
     
     $tabTicketsSociete = tabTicketBySocieteByUser($socID,'');
@@ -241,13 +241,23 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'detailTicket')
         
         $sujetId = $sujetEnCours->getId();
         
+
         $tabDetailEnCours = $connexion -> selectFromWhereAnd('*','ticketinfo','ticketID', $sujetId, 'type', 0 );
         $tabActionEnCours = $connexion -> selectFromWhereAnd('*','ticketinfo','ticketID', $sujetId, 'type', 1  );
+//         var_dump($tabDetailEnCours);
         
-        foreach ($tabDetailEnCours as $detail)
-            $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
-        foreach ($tabActionEnCours as $detail)
-            $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+        if (isset($tabDetailEnCours)) {
+            foreach ($tabDetailEnCours as $detail) {
+                $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+            }
+        }
+        
+        if (isset($tabActionEnCours)) {
+            foreach ($tabActionEnCours as $detail) {
+                $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+            }
+        }
+        
                 
 }
 //traitement detail ticket
@@ -307,13 +317,16 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
         $tabDetailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujetId, 'type', 0, 'id', 'DESC' );
         $tabActionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujetId, 'type', 1, 'id', 'DESC' );
         
-        
-        foreach ($tabDetailEnCours as $detail)
-            $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
-        foreach ($tabActionEnCours as $detail)
-            $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
-                
-                
+        if (isset($tabDetailEnCours)) {
+            foreach ($tabDetailEnCours as $detail){
+                $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+            }
+        }
+        if (isset($tabActionEnCours)) {
+            foreach ($tabActionEnCours as $detail){
+                $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+            }
+        }
         
         
 }
@@ -357,13 +370,13 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
     
     
     $sujetEnCours = new Ticket($queryTicketID[0]['id'],
-        $queryTicketID[0]['sujet'],
-        $queryTicketID[0]['interlocuteurID'],
-        $queryTicketID[0]['societeID'],
-        $queryTicketID[0]['status'],
-        $queryTicketID[0]['date'],
-        $queryTicketID[0]['utilisateurID']);
-    
+                                $queryTicketID[0]['sujet'],
+                                $queryTicketID[0]['interlocuteurID'],
+                                $queryTicketID[0]['societeID'],
+                                $queryTicketID[0]['status'],
+                                $queryTicketID[0]['date'],
+                                $queryTicketID[0]['utilisateurID']);
+                            
     $statusTicket = $sujetEnCours->getStatus();
     /*
      * Etape 3 - on recupere le detail en base

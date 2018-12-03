@@ -40,6 +40,7 @@ $InterlocuteurModif;
     $interlocuteurEnCours = new Interlocuteur($tabInterlocuteur[0]['id'], $tabInterlocuteur[0]['nom'], $tabInterlocuteur[0]['prenom'], $tabInterlocuteur[0]['telephone'], $tabInterlocuteur[0]['email'], $tabInterlocuteur[0]['societeID']);
     
      $warning = "L'interlocuteur a été correctement ajoutée !";
+     $warningColor = "text-white bg-success";
      
      //On remet le tableau à jour
      $tabListeInterlocuteurs = $connexion->selectFromWhere('*', 'interlocuteur', '', '');

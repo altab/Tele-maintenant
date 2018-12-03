@@ -15,6 +15,8 @@
       <div class="card card-register mx-auto mt-5">
         <div class="card-header">Créer un compte utilisateur</div>
         <div class="card-body">
+        <p class="text-justify text-mini">Afin d'utiliser l'application, vous devez vous créer un compte utilisateur en remplissant le formulaire ci-dessous.<br />
+        Veuillez noter qe vous ne pourrez utiliser votre compte qu'après validation de l'administrateur.</p>
           <form action="/page/inscription.php" method="post">
             <div class="form-group">
               <div class="form-row">

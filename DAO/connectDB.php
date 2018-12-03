@@ -50,7 +50,7 @@ class connectDB {
     function insertTicket($sujet, $iID, $socID, $status, $uID) {
         
         $pdo =  $this -> getConn();
-        $today = date("Y-m-d"); 
+        $today = date('Y-m-d H:i:s'); 
         
         $preparedStatement =  $pdo -> prepare("INSERT INTO ticket (sujet, interlocuteurID, societeID, status, date, utilisateurID) VALUES (?,?,?,?,?,?)");
         $preparedStatement->bindParam(1, $sujet);
@@ -67,7 +67,7 @@ class connectDB {
     function insertDetail($type,$info,$ticketID, $utilisateurID) {
         
         $pdo =  $this -> getConn();
-        $today = date("Y-m-d");
+        $today = date('Y-m-d H:i:s');
         
         $preparedStatement =  $pdo -> prepare("INSERT INTO ticketinfo( info, date, type, ticketID, utilisateurID) VALUES (?,?,?,?,?)");
         $preparedStatement->bindParam(1, $info);
@@ -106,13 +106,13 @@ class connectDB {
         
         $pdo =  $this -> getConn();
         
-//         $preparedStatement =  $pdo -> prepare("INSERT INTO interlocuteur( nom, prenom, telephone, email, societeID) VALUES (?,?,?,?,?)");
-//         $preparedStatement->bindParam(1, $nom);
-//         $preparedStatement->bindParam(2, $prenom);
-//         $preparedStatement->bindParam(3, $telephone);
-//         $preparedStatement->bindParam(4, $email);
-//         $preparedStatement->bindParam(5, $societeID);
-        $preparedStatement->execute("CALL insertInterlocuteurPS($nom,$prenom, $telephone, $email, $societeID)");
+         $preparedStatement =  $pdo -> prepare("INSERT INTO interlocuteur( nom, prenom, telephone, email, societeID) VALUES (?,?,?,?,?)");
+        $preparedStatement->bindParam(1, $nom);
+        $preparedStatement->bindParam(2, $prenom);
+        $preparedStatement->bindParam(3, $telephone);
+        $preparedStatement->bindParam(4, $email);
+        $preparedStatement->bindParam(5, $societeID);
+        $preparedStatement->execute();
         $preparedStatement->closeCursor();
         
     }
@@ -338,9 +338,7 @@ class connectDB {
         $reponse = $pdo->query($query);
         
         $reponse =  $reponse ->fetch();
-        
-        $reponse->closeCursor();
-        
+                
         return $reponse;
     }
     
@@ -457,7 +455,7 @@ class connectDB {
         $reponse = $pdo->query($query);
         
         $reponse =  $reponse ->fetch();
-          
+                
         return $reponse;
     }
     

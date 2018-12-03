@@ -55,7 +55,7 @@ $nombreTichetsEnAttente = $listeTicketsOperateur1 = $connexion->selectCountFromW
 		</a>
 			<div class="dropdown-menu dropdown-menu-right"
 				aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="#"><i class="fas fa-cogs text-muted"></i>
+				<a class="dropdown-item" href="#"><i class="fas fa-user-cog text-muted"></i>
 					Paramètres</a>
 				<div class="dropdown-divider"></div>
 
