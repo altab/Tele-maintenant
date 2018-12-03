@@ -183,6 +183,7 @@ class connectDB {
             $reponses[] = $message;
             
         }
+        $reponse->closeCursor();
         
         return $reponses;
         
@@ -218,6 +219,7 @@ class connectDB {
             $reponses[] = $message;
             
         }
+        $reponse->closeCursor();
         
         return $reponses;
         
@@ -241,6 +243,7 @@ class connectDB {
             $reponses[] = $message;
             
         }
+        $reponse->closeCursor();
         
         return $reponses;
         
@@ -275,6 +278,7 @@ class connectDB {
             $reponses[] = $message;
             
         }
+        $reponse->closeCursor();
         
         return $reponses;
         
@@ -313,6 +317,7 @@ class connectDB {
             $reponses[] = $message;
             
         }
+        $reponse->closeCursor();
         
         return $reponses;
         
@@ -334,8 +339,11 @@ class connectDB {
         
         $reponse =  $reponse ->fetch();
         
+        $reponse->closeCursor();
+        
         return $reponse;
     }
+    
     
     function selectCountFromWhere($element,$table,$whereEl, $whereVal) {
         
@@ -353,6 +361,7 @@ class connectDB {
             $reponses[] = $message;
             
         }
+        $reponse->closeCursor();
         
         return $reponses;
         
@@ -379,6 +388,7 @@ class connectDB {
         
         // execute the query
         $stmt->execute();
+        $stmt->closeCursor();
         
     }
 
@@ -394,6 +404,7 @@ class connectDB {
         
         // execute the query
         $stmt->execute();
+        $stmt->closeCursor();
         
         
     }
@@ -415,6 +426,7 @@ class connectDB {
             $reponses[] = $message;
             
         }
+        $reponse->closeCursor();
         
         return $reponses;
         
@@ -445,6 +457,8 @@ class connectDB {
         $reponse = $pdo->query($query);
         
         $reponse =  $reponse ->fetch();
+        
+        $reponse->closeCursor();
         
         return $reponse;
     }
