@@ -45,14 +45,13 @@ $nombreTichetsEnAttente = $listeTicketsOperateur1 = $connexion->selectCountFromW
 				<kbd class="bg-info"><?php if (isset($nombreTichetsEnAttente['0']['0'])) echo $nombreTichetsEnAttente['0']['0'] ?></kbd> 
 				ticket<?php if (isset($nombreTichetsEnAttente['0']['0']) && $nombreTichetsEnAttente['0']['0'] > 1 ) echo 's' ?> en attente de
 				traitement.
-				<a href="/page/tickets.php" class="btn btn-primary btn-sm mt-2">Voir les tickets</a></div></li>
+				<a href="/page/dashboard.php" class="btn btn-primary btn-sm mt-2">Voir les tickets</a></div></li>
 
 		<!--  logout-->
 		<li class="nav-item dropdown no-arrow"><a
 			class="nav-link dropdown-toggle" href="#" id="userDropdown"
 			role="button" data-toggle="dropdown">
-            [ <?php echo $nomUtilisateurEnCours?> ] <i
-				class="fas fa-user-circle fa-fw"></i>
+            [ <?php echo $nomUtilisateurEnCours?> ] <i class="fas fa-user-circle fa-fw"></i>
 		</a>
 			<div class="dropdown-menu dropdown-menu-right"
 				aria-labelledby="userDropdown">
@@ -61,8 +60,7 @@ $nombreTichetsEnAttente = $listeTicketsOperateur1 = $connexion->selectCountFromW
 				<div class="dropdown-divider"></div>
 
 				<a class="dropdown-item" href="#" data-toggle="modal"
-					data-target="#logoutModal"><i
-					class="far fa-times-circle text-muted"></i> Quitter</a>
+					data-target="#logoutModal"><i class="far fa-times-circle text-muted"></i> Quitter</a>
 			</div></li>
 	</ul>
 </nav>

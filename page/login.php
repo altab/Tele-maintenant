@@ -35,15 +35,17 @@ function VerifLogin($login, $password, $origine)
 {
     $connexion = new connectDB();
     $tabUtilisateur = $connexion->selectFromWhereAnd('*','utilisateur','email',$login, 'password', $password);
-    if($tabUtilisateur) $utilisateur= new Utilisateur($tabUtilisateur[0]['id'], 
-                                    $tabUtilisateur[0]['nom'],
-                                    $tabUtilisateur[0]['prenom'], 
-                                    $tabUtilisateur[0]['email'], 
-                                    $tabUtilisateur[0]['password'], 
-                                    $tabUtilisateur[0]['icone'], 
-                                    $tabUtilisateur[0]['role']);
 
-    if (isset($utilisateur)) {
+    if($tabUtilisateur) $utilisateur= new Utilisateur(  $tabUtilisateur[0]['id'], 
+                                                        $tabUtilisateur[0]['nom'],
+                                                        $tabUtilisateur[0]['prenom'], 
+                                                        $tabUtilisateur[0]['email'], 
+                                                        $tabUtilisateur[0]['password'], 
+                                                        $tabUtilisateur[0]['icone'], 
+                                                        $tabUtilisateur[0]['role'],
+                                                        $tabUtilisateur[0]['actif']);
+
+    if (isset($utilisateur) && $utilisateur->getActif() == 1) {
         
             $_SESSION['login'] = $utilisateur->getEmail();
             $_SESSION['role'] = $utilisateur->getRole();
@@ -56,9 +58,14 @@ function VerifLogin($login, $password, $origine)
              header("Location:  http://" . $_SERVER['SERVER_NAME'] . $urlOrigine . "");
 
     } else {
-            if (isset($login))
-                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/page/login.php?connexion=ko");
-            else
+        if (isset($login)) {
+            
+                if(isset($utilisateur) && $utilisateur->getActif() != 1)
+                    header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/page/login.php?connexion=enAttente");
+                else
+                    header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/page/login.php?connexion=ko");
+                
+        } else 
                 header("Location:  http://" . $_SERVER['SERVER_NAME'] . "/metier/login.php");
 
     }

@@ -39,7 +39,7 @@
             <button class="btn btn-primary btn-block" type="submit">Connexion</button>
           </form>
           <div class="text-center">
-            <a class="d-block small mt-3" href="#">Créer un compte</a>
+            <a class="d-block small mt-3" href="/page/inscription.php">Créer un compte</a>
             <a class="d-block small" href="#">Mot de passe oublié ?</a>
           </div>
         </div>
@@ -47,7 +47,12 @@
 				<div class="card-footer bg-danger text-white text-center">
   					  Identifiant ou mot-de-passe incorrect ! 
  				</div>
-			<?php }?>
+		<?php }?>
+		<?php if  ( isset($_GET['connexion']) && $_GET['connexion'] == 'enAttente' ) {?>
+				<div class="card-footer bg-info text-white text-center">
+  					  Votre compte est en attente de validation par un administrateur ! 
+ 				</div>
+		<?php }?>
       
       </div>
     </div>

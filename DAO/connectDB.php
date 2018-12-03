@@ -94,16 +94,42 @@ class connectDB {
         
     }
     
+    /**
+     * Procedure stockée
+     * @param  $nom
+     * @param  $prenom
+     * @param  $telephone
+     * @param  $email
+     * @param  $societeID
+     */
     function insertInterlocuteur($nom,$prenom, $telephone, $email, $societeID) {
         
         $pdo =  $this -> getConn();
         
-        $preparedStatement =  $pdo -> prepare("INSERT INTO interlocuteur( nom, prenom, telephone, email, societeID) VALUES (?,?,?,?,?)");
+//         $preparedStatement =  $pdo -> prepare("INSERT INTO interlocuteur( nom, prenom, telephone, email, societeID) VALUES (?,?,?,?,?)");
+//         $preparedStatement->bindParam(1, $nom);
+//         $preparedStatement->bindParam(2, $prenom);
+//         $preparedStatement->bindParam(3, $telephone);
+//         $preparedStatement->bindParam(4, $email);
+//         $preparedStatement->bindParam(5, $societeID);
+        $preparedStatement->execute("CALL insertInterlocuteurPS($nom,$prenom, $telephone, $email, $societeID)");
+        $preparedStatement->closeCursor();
+        
+    }
+    
+    function insertUtilisateur($nom,$prenom, $email, $password, $role) {
+        
+        $pdo =  $this -> getConn();
+        
+        $status = '0';
+        
+        $preparedStatement =  $pdo -> prepare("INSERT INTO utilisateur( nom, prenom, email, password, role, actif) VALUES (?,?,?,?,?,?)");
         $preparedStatement->bindParam(1, $nom);
         $preparedStatement->bindParam(2, $prenom);
-        $preparedStatement->bindParam(3, $telephone);
-        $preparedStatement->bindParam(4, $email);
-        $preparedStatement->bindParam(5, $societeID);
+        $preparedStatement->bindParam(3, $email);
+        $preparedStatement->bindParam(4, $password);
+        $preparedStatement->bindParam(5, $role);
+        $preparedStatement->bindParam(6, $status);
         $preparedStatement->execute();
         $preparedStatement->closeCursor();
         

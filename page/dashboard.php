@@ -36,33 +36,32 @@ $tabTicketsOperateur;
 
 //$listeTicketsOperateur = $listeTicketsOperateur1 + $listeTicketsOperateur2;
 // construction du tableau des tickets en cours pour l'utilisateur
-
-
     
 $listeTicketsOperateur2 = $connexion->selectFromWhereAnd('*', 'ticket', 'utilisateurID', $utilisateurID, 'status', '1');
-    
-foreach ($listeTicketsOperateur2 as $ticketsOperateur)
-    $tabTicketsOperateur[] = new Ticket($ticketsOperateur['id'],
-        $ticketsOperateur['sujet'],
-        $ticketsOperateur['interlocuteurID'],
-        $ticketsOperateur['societeID'],
-        $ticketsOperateur['status'],
-        $ticketsOperateur['date'],
-        $ticketsOperateur['utilisateurID']);
+if (isset($listeTicketsOperateur2)) {
+    foreach ($listeTicketsOperateur2 as $ticketsOperateur)
+        $tabTicketsOperateur[] = new Ticket($ticketsOperateur['id'],
+                                            $ticketsOperateur['sujet'],
+                                            $ticketsOperateur['interlocuteurID'],
+                                            $ticketsOperateur['societeID'],
+                                            $ticketsOperateur['status'],
+                                            $ticketsOperateur['date'],
+                                            $ticketsOperateur['utilisateurID']);
+}
 
 $listeTicketsOperateur1 = $connexion->selectFromWhere('*', 'ticket', 'utilisateurID', '99999', 'status', '2');
-    
-    
-foreach ($listeTicketsOperateur1 as $ticketsOperateur)
+if (isset($listeTicketsOperateur1)) {
+    foreach ($listeTicketsOperateur1 as $ticketsOperateur)
         $tabTicketsOperateur[] = new Ticket($ticketsOperateur['id'],
-            $ticketsOperateur['sujet'],
-            $ticketsOperateur['interlocuteurID'],
-            $ticketsOperateur['societeID'],
-            $ticketsOperateur['status'],
-            $ticketsOperateur['date'],
-            $ticketsOperateur['utilisateurID']);
+                                            $ticketsOperateur['sujet'],
+                                            $ticketsOperateur['interlocuteurID'],
+                                            $ticketsOperateur['societeID'],
+                                            $ticketsOperateur['status'],
+                                            $ticketsOperateur['date'],
+                                            $ticketsOperateur['utilisateurID']);
+}
 
-rsort($tabTicketsOperateur);
+if (isset($tabTicketsOperateur)) rsort($tabTicketsOperateur);
 
 
 $connexion = null;

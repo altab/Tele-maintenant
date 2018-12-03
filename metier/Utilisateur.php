@@ -3,9 +3,9 @@
 
 class Utilisateur {
     
-    private $id, $nom, $prenom, $email, $password, $icone, $role;
+    private $id, $nom, $prenom, $email, $password, $icone, $role, $actif;
     
-    function __construct($id, $nom, $prenom, $email, $password, $icone, $role) {
+    function __construct($id, $nom, $prenom, $email, $password, $icone, $role, $actif) {
         
         $this->setId($id);
         $this->setNom($nom);
@@ -14,7 +14,23 @@ class Utilisateur {
         $this->setPassword($password);
         $this->setIcone($icone);
         $this->setRole($role);
+        $this->setActif($actif);
         
+    }
+    
+    public function __toString() {
+        
+        $toString = "\nObjet Utilisateur : "
+        ."\n[ Id : ".$this->getId()
+        ."\n Nom : " .$this->getNom()
+        ."\n Prénom : " .$this->getPrenom()
+        ."\n Email : " .$this->getEmail()
+        ."\n Password : " .$this->getPassword()
+        ."\n Icone : " .$this->getIcone()
+        ."\n Role : " .$this->getRole()
+        ."\n Actif : " .$this->getActif()." ]";
+        
+        return $toString;
     }
     
     
@@ -78,6 +94,22 @@ class Utilisateur {
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActif()
+    {
+        return $this->actif;
+    }
+
+    /**
+     * @param mixed $actif
+     */
+    private function setActif($actif)
+    {
+        $this->actif = $actif;
     }
 
     /**

@@ -24,6 +24,18 @@ class Detail {
         
     }
     
+    public function __toString() {
+        
+        $toString = "\n Objet Detail : "
+            ."\n[ Id : ".$this->getId()
+            ."\n Info : " .$this->getInfo()
+            ."\n Date : " .$this->getDate()
+            ."\n TicketId : " .$this->getTicketID()
+            ."\n UtilisateurId : " .$this->getUtilisateurID()." ]";
+            
+            return $toString;
+    }
+    
     
     
     /**
