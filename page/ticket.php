@@ -18,6 +18,7 @@ require_once '../DAO/connectDB.php';
 require_once '../metier/Societe.php';
 require_once '../metier/Interlocuteur.php';
 require_once '../metier/Ticket.php';
+require_once '../metier/Detail.php';
 
 /*
  * Traitements base de données
@@ -240,9 +241,14 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'detailTicket')
         
         $sujetId = $sujetEnCours->getId();
         
-        $detailEnCours = $connexion -> selectFromWhereAnd('*','ticketinfo','ticketID', $sujetId, 'type', 0 );
-        $actionEnCours = $connexion -> selectFromWhereAnd('*','ticketinfo','ticketID', $sujetId, 'type', 1  );
-
+        $tabDetailEnCours = $connexion -> selectFromWhereAnd('*','ticketinfo','ticketID', $sujetId, 'type', 0 );
+        $tabActionEnCours = $connexion -> selectFromWhereAnd('*','ticketinfo','ticketID', $sujetId, 'type', 1  );
+        
+        foreach ($tabDetailEnCours as $detail)
+            $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+        foreach ($tabActionEnCours as $detail)
+            $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+                
 }
 //traitement detail ticket
 elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
@@ -298,8 +304,17 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
         
         
         $sujetId = $sujetEnCours->getId();
-        $detailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujetId, 'type', 0, 'id', 'DESC' );
-        $actionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujetId, 'type', 1, 'id', 'DESC' );        
+        $tabDetailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujetId, 'type', 0, 'id', 'DESC' );
+        $tabActionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujetId, 'type', 1, 'id', 'DESC' );
+        
+        
+        foreach ($tabDetailEnCours as $detail)
+            $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+        foreach ($tabActionEnCours as $detail)
+            $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+                
+                
+        
         
 }
 // On ajoute une action
@@ -354,17 +369,23 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
      * Etape 3 - on recupere le detail en base
      */
     $sujet = $sujetEnCours->getId();
-    $detailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 0, 'id', 'DESC');
+    $tabDetailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 0, 'id', 'DESC');
+    
+    foreach ($tabDetailEnCours as $detail)
+        $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
     
     
     /*
      * Etape 4 - on ajoute le detail en base
      */
     $infoAction =  $_GET['actionTicket'];
-    $connexion -> insertDetail(1, $infoAction, $sujetEnCours->getId()) ;
+    $connexion -> insertDetail(1, $infoAction, $sujetEnCours->getId(), $utilisateurID) ;
     
-    $actionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 1 , 'id', 'DESC' );
-
+    $tabActionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 1 , 'id', 'DESC' );
+    foreach ($tabActionEnCours as $detail)
+        $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+        
+        
     
 }
 // On Cloture le ticket
@@ -416,16 +437,23 @@ elseif ((isset($_POST['action']) && $_POST['action'] == 'changerStatusTicket') )
      * Etape 3 - on recupere le detail en base
      */
     $sujet = $sujetEnCours->getId();
-    $detailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 0, 'id', 'DESC');
-    $actionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 1 , 'id', 'DESC' );
+    $tabDetailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 0, 'id', 'DESC');
+    $tabActionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 1 , 'id', 'DESC' );
     
+    foreach ($tabDetailEnCours as $detail)
+        $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+    foreach ($tabActionEnCours as $detail)
+        $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
+            
+            
+        
     $id = $sujetEnCours->getId();
     if($sujetEnCours->getStatus() == 1) $connexion -> updateRaw('ticket', 'status', 0, 'id', $id);
     else $connexion -> updateRaw('ticket', 'status', 1, 'id', $id);
     
     // On reconstruit l'objet à jour avant d'laffichage de la page$queryTicketID = $connexion -> selectFromWhere('*','ticket','id', $IDTicket );
     $sujetEnCours = null;
-//    $detailEnCours = null;
+//  $detailEnCours = null;
     
     $queryTicketID = $connexion -> selectFromWhere('*','ticket','id', $IDTicket );
     $sujetEnCours = new Ticket($queryTicketID[0]['id'],

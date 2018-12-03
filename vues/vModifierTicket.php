@@ -163,7 +163,7 @@
                       if($detailTicket['type'] == 0) $type = "<span class=\"text-warning\">Détail</span>";
                       else $type ="<span class=\"text-primary\">Action</span>";
                       
-                      $detail  = new Detail($detailTicket['id'], $detailTicket['info'], $detailTicket['date'], $detailTicket['ticketID'], $detailTicket['utilisateurID']);
+                      $detail['id']  = new Detail($detailTicket['id'], $detailTicket['info'], $detailTicket['date'], $detailTicket['ticketID'], $detailTicket['utilisateurID']);
                       
                   ?>
 					<tr>

@@ -46,3 +46,7 @@ td.align-center { width: 74px;}
 .minitext {
 	font-size: 13px;
 }
+.text-mini {
+	font-size: 12px;
+	color: #999999;
+}

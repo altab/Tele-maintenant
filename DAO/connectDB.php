@@ -457,9 +457,7 @@ class connectDB {
         $reponse = $pdo->query($query);
         
         $reponse =  $reponse ->fetch();
-        
-        $reponse->closeCursor();
-        
+          
         return $reponse;
     }
     

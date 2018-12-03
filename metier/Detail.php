@@ -38,6 +38,7 @@ class Detail {
     
     
     
+    
     /**
      * @return mixed
      */

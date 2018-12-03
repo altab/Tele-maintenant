@@ -237,7 +237,7 @@
 
 
 					<div class="card-header <?php if (!isset($statusTicket) || $statusTicket != 0 ) echo "bg-warning text-dark";?>" id="ajouterTicket">
-						<i class="fas fa-fw fa-pencil-alt"></i><?php if (isset($sujetEnCours) ) echo " Modifier un ticket"; else echo " Ajouter un ticket";?>
+						<i class="fas fa-fw fa-pencil-alt"></i><?php if (isset($sujetEnCours) ) echo " Modifier le ticket [".$sujetEnCours->getId()."]"; else echo " Ajouter un ticket";?>
                     	<?php
 
                 if ((! isset($statusTicket) || $statusTicket != 0) && (isset($sujetEnCours)))
@@ -271,7 +271,7 @@
                     if (isset($detailEnCours)) {
                         $index = 0;
                         foreach ($detailEnCours as $detail) {
-                            echo "<ul><li><b>" . $detail['date'] . "</b> : " . $detail['info'] . "\n";
+                            echo "<ul><li><b>". $detail->getDate() . "</b> : " . $detail-> getInfo(). " <span class='font-weight-light text-mini'>[".$detail->NomFromUtilisateurID ()."]</span>\n";
                             $index ++;
                         }
                         for ($i = 0; $i < $index; $i ++) {
@@ -315,7 +315,7 @@
                     if (isset($actionEnCours)) {
                         $index = 0;
                         foreach ($actionEnCours as $detail) {
-                            echo "<ul><li><b>" . $detail['date'] . "</b> : " . $detail['info'] . "\n";
+                            echo "<ul><li><b>" . $detail->getDate() . "</b> : " . $detail->getInfo() . " <span class='font-weight-light text-mini'>[".$detail->NomFromUtilisateurID ()."]</span>\n";
                             $index ++;
                         }
                         for ($i = 0; $i < $index; $i ++) {
