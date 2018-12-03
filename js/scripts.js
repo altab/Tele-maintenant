@@ -38,7 +38,7 @@ $(document).ready(function() {
   $('#dataTable').DataTable( {
         "order": [[ 0, 'desc' ]],
         "language": {
-            "lengthMenu": "Voir _MENU_ tickets",
+            "lengthMenu": "Voir _MENU_ lignes",
             "search": "Rechercher",
             "zeroRecords": "Pas d'enregistrements - Désolé",
             "info": "Voir page _PAGE_ sur _PAGES_",

@@ -28,10 +28,7 @@ $warningColor;
 
 
 
-$tabListeSocietes = $connexion->selectFromWhere('*', 'societe', '', '');
 
-foreach ($tabListeSocietes as $societe)
-    $listeSociete[] = new Societe($societe['id'], $societe['nom'], $societe['adresse'], $societe['telephone'], $societe['email']);
 
 
 if(isset($_GET['action']) && $_GET['action']=='creerSociete') {
@@ -53,6 +50,10 @@ if(isset($_GET['action']) && $_GET['action']=='creerSociete') {
         $warning = "La société a été créée !";
         $warningColor = ' bg-success text-white';
     }
+    
+    //on remet le tebleau à jour
+    $tabListeSocietes=null;
+    $tabListeSocietes = $connexion->selectFromWhere('*', 'societe', '', '');
     
 } elseif (isset($_GET['action']) && $_GET['action']=='modifierSociete') {
     
@@ -97,9 +98,7 @@ if(isset($_GET['action']) && $_GET['action']=='creerSociete') {
     
     //on remet le tableau à jour
     $tabListeSocietes = $connexion->selectFromWhere('*', 'societe', '', '');
-    $listeSociete = null;
-    foreach ($tabListeSocietes as $societe)
-        $listeSociete[] = new Societe($societe['id'], $societe['nom'], $societe['adresse'], $societe['telephone'], $societe['email']);
+    
     
 } elseif (isset($_POST['action']) && $_POST['action']=='supprimerSociete') {
 
@@ -107,30 +106,33 @@ if(isset($_GET['action']) && $_GET['action']=='creerSociete') {
       && ((!isset($statusUser) || $statusUser==1)) ) {
           
          $verifTicketSociete = $connexion->selectFromWhere('*', 'ticket', 'societeID', $_POST['idSocieteSuppr']);
+         $verifInterlocuteurSociete = $connexion->selectFromWhere('*', 'interlocuteur', 'societeID', $_POST['idSocieteSuppr']);
          
          //si on a pas de ticket associé on peut supprimer la Sté
-         if(!$verifTicketSociete) {
+         if(!$verifTicketSociete && !$verifInterlocuteurSociete) {
             $connexion->deleteArrayFrom('societe', 'id', $_POST['idSocieteSuppr']);
          
             $warning = "La société a été définitivement supprimée !";
             $warningColor = 'bg-danger text-white';
          } else {
-             $warning = "La société n'a pas été supprimée car des tickets lui sont associé !";
+             $warning = "La société n'a pas été supprimée car des tickets ou des Interlocuteurs lui sont toujours associé !";
              $warningColor = 'bg-danger text-white';
          }
          
          //on remet le tableau à jour
          $tabListeSocietes = $connexion->selectFromWhere('*', 'societe', '', '');
-         $listeSociete = null;
-         foreach ($tabListeSocietes as $societe)
-             $listeSociete[] = new Societe($societe['id'], $societe['nom'], $societe['adresse'], $societe['telephone'], $societe['email']);
+         
           
       }
-      
-      
-
+  
+} else {
+    
+    $tabListeSocietes = $connexion->selectFromWhere('*', 'societe', '', '');
     
 }
+foreach ($tabListeSocietes as $societe)
+    $listeSociete[] = new Societe($societe['id'], $societe['nom'], $societe['adresse'], $societe['telephone'], $societe['email']);
+
 if(isset($societeEnCours)) $societeModif = $societeEnCours;
 
 $connexion = null;

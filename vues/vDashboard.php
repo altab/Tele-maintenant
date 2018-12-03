@@ -33,7 +33,7 @@
 							<div class="card-body-icon">
 								<i class="fas fa-fw fa-list-alt"></i>
 							</div>
-							<div class="mr-5"><?php echo $nbTickets; ?> tickets en créés !</div>
+							<div class="mr-5"><?php echo $nbTickets; ?> tickets créés !</div>
 						</div>
 						<a class="card-footer text-white clearfix small z-1"
 							href="/page/ticket.php"> <span class="float-left">Details</span>
@@ -80,7 +80,7 @@
 							</div>
 							<div class="mr-5"><?php echo $nbInterlocuteurs; ?> interlocuteurs !</div>
 						</div>
-						<a class="card-footer text-white clearfix small z-1" href="#"> <span
+						<a class="card-footer text-white clearfix small z-1" href="/page/interlocuteurs.php"> <span
 							class="float-left">Details</span> <span class="float-right"> <i
 								class="fas fa-angle-right"></i>
 						</span>

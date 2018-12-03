@@ -72,13 +72,14 @@
 				</div>
 
 				<div class="col-6">
+				<form action="/page/ticket.php" method="get">
 					<div class="card h-100">
 						<div class="card-header bg-primary text-white">
 							<span class="h5">2 - Recherche Interlocuteur <?php if(isset($societeEnCours))echo ucfirst($societeEnCours); ?>
   					 	    <a class="btn btn-light btn-sm mr-1 float-right" href="#" data-toggle="modal" data-target="#nouvelInterlocuteur">Ajouter</a>
 							</span>
 						</div>
-						<form action="/page/ticket.php" method="get">
+						
                          <?php if(isset($societeEnCours))echo "<input type='hidden' value='$societeEnCours' name='societeEnCours'/>"; ?>
                 	<div class="card-body">
 								<fieldset>
@@ -156,9 +157,9 @@
 									<input class="btn bg-success float-right text-white" type="submit" value="Valider">
 								</div>
 							</div>
-						</form>
+						
 					</div>
-
+					</form>
 				</div>
 			</div>
             

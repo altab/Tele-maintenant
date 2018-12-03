@@ -16,6 +16,16 @@ class Interlocuteur {
         
     }
     
+    function NomFromSocieteID () {
+        require_once '../DAO/connectDB.php';
+        $connexion = new connectDB();
+        
+        $nomSocietes = $connexion->selectFromWhere('nom','societe','id', $this->getSocieteID());
+        
+        return $nomSocietes[0]['nom'];
+        
+    }
+    
     
     /**
      * @return mixed

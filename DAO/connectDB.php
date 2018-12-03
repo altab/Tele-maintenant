@@ -94,6 +94,21 @@ class connectDB {
         
     }
     
+    function insertInterlocuteur($nom,$prenom, $telephone, $email, $societeID) {
+        
+        $pdo =  $this -> getConn();
+        
+        $preparedStatement =  $pdo -> prepare("INSERT INTO interlocuteur( nom, prenom, telephone, email, societeID) VALUES (?,?,?,?,?)");
+        $preparedStatement->bindParam(1, $nom);
+        $preparedStatement->bindParam(2, $prenom);
+        $preparedStatement->bindParam(3, $telephone);
+        $preparedStatement->bindParam(4, $email);
+        $preparedStatement->bindParam(5, $societeID);
+        $preparedStatement->execute();
+        $preparedStatement->closeCursor();
+        
+    }
+    
     
     /**
      * Liste des enregistrements à supprimer
@@ -133,6 +148,7 @@ class connectDB {
         $pdo =  $this -> getConn();
         
         $query = "SELECT ".$element." FROM ".$table.$where;
+//echo $query;
         $reponse = $pdo->query($query);
         
         $reponses = NULL;
@@ -276,6 +292,12 @@ class connectDB {
         
     }
     
+    /**
+     * ex. : SELECT id FROM ticket WHERE interlocuteurID=2 ORDER BY id DESC LIMIT 0,1
+     * @param  $table
+     * @param  $champ
+     * @param  $id
+     */
     function selectLastId ($table, $champ, $id) {
         //SELECT id FROM ticket WHERE interlocuteurID=2 ORDER BY id DESC LIMIT 0,1
         $pdo =  $this -> getConn();
@@ -325,7 +347,7 @@ class connectDB {
         $pdo =  $this -> getConn();
         
         $query = "UPDATE $table SET $valEl='$valVal' WHERE $whereEl=$whereVal";
-                
+
         // Prepare statement
         $stmt = $pdo->prepare($query);
         

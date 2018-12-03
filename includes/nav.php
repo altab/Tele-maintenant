@@ -45,7 +45,7 @@ $nombreTichetsEnAttente = $listeTicketsOperateur1 = $connexion->selectCountFromW
 				<kbd class="bg-info"><?php if (isset($nombreTichetsEnAttente['0']['0'])) echo $nombreTichetsEnAttente['0']['0'] ?></kbd> 
 				ticket<?php if (isset($nombreTichetsEnAttente['0']['0']) && $nombreTichetsEnAttente['0']['0'] > 1 ) echo 's' ?> en attente de
 				traitement.
-				<a href="/page/dashboard" class="btn btn-primary btn-sm mt-2">Voir les tickets</a></div></li>
+				<a href="/page/tickets.php" class="btn btn-primary btn-sm mt-2">Voir les tickets</a></div></li>
 
 		<!--  logout-->
 		<li class="nav-item dropdown no-arrow"><a
