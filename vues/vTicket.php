@@ -203,7 +203,7 @@
                              
                               	<tr>
 										<td><?php echo $ticketSociete->getId();?></td>
-										<td><?php echo $ticketSociete->getDate();?></td>
+										<td><?php echo $ticketSociete->dateFR();?></td>
 										<td><?php echo ucfirst($ticketSociete->getSujet());?></td>
 										<td><?php echo $ticketSociete->NomFromInterlocuteurID ();?></td>
 										<td><?php echo $ticketSociete->NomFromSocieteID ();?></td>
@@ -271,7 +271,7 @@
                     if (isset($detailEnCours)) {
                         $index = 0;
                         foreach ($detailEnCours as $detail) {
-                            echo "<ul><li><b>" . $detail->getDate() . "</b> : " . $detail->getInfo() . " <span class='font-weight-light text-mini'>[" . $detail->NomFromUtilisateurID() . "]</span>\n";
+                            echo "<ul><li>" . (String) $detail->dateFR() . " : <b>" . $detail->getInfo() . "</b> <span class='font-weight-light text-mini'>[" . $detail->NomFromUtilisateurID() . "]</span>\n";
                             $index ++;
                         }
                         for ($i = 0; $i < $index; $i ++) {
@@ -315,7 +315,7 @@
                     if (isset($actionEnCours)) {
                         $index = 0;
                         foreach ($actionEnCours as $detail) {
-                            echo "<ul><li><b>" . $detail->getDate() . "</b> : " . $detail->getInfo() . " <span class='font-weight-light text-mini'>[" . $detail->NomFromUtilisateurID() . "]</span>\n";
+                            echo "<ul><li>" . $detail->dateFR() . " : <b>" . $detail->getInfo() . "</b> <span class='font-weight-light text-mini'>[" . $detail->NomFromUtilisateurID() . "]</span>\n";
                             $index ++;
                         }
                         for ($i = 0; $i < $index; $i ++) {

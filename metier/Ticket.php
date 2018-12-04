@@ -53,6 +53,14 @@ class Ticket {
         
     }
     
+    function dateFR(){
+        
+        $date = new DateTime($this->getDate(),new DateTimeZone('Europe/Paris'));
+        $date = $date ->format('d.m.Y à H\hi');
+        echo $date;
+        
+    }
+    
     
     
     /**
