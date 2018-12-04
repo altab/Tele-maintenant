@@ -35,8 +35,7 @@
 							</div>
 							<div class="mr-5"><?php echo $nbTickets; ?> tickets créés !</div>
 						</div>
-						<a class="card-footer text-white clearfix small z-1"
-							href="/page/ticket.php"> <span class="float-left">Details</span>
+						<a href="/page/ticket.php"  class="card-footer text-white clearfix small z-1"> <span class="float-left">Details</span>
 							<span class="float-right"> <i class="fas fa-angle-right"></i>
 						</span>
 						</a>
@@ -51,7 +50,7 @@
 							<div class="mr-5"><?php echo $nbCloturesTickets; ?> tickets cloturés !</div>
 						</div>
 						<a class="card-footer text-white clearfix small z-1"
-							href="/page/ticket.php""> <span class="float-left">Details</span>
+							href="/page/ticket.php"> <span class="float-left">Details</span>
 							<span class="float-right"> <i class="fas fa-angle-right"></i>
 						</span>
 						</a>
@@ -165,7 +164,7 @@
                           	 <?php } ?>
                           </tbody>
 							</table>
-							</form>
+							
                         <?php } else echo "<p class='text-danger text-center'>Aucun ticket en cours pour cet opérateur !</p>"; ?>
                       </div>
 					</div>
@@ -179,10 +178,11 @@
 		<?php require_once '../includes/footer.php';?>
 		
       </div>
+      <!-- /.content-wrapper -->
 
-
-
-
+    </div>
+    <!-- /#wrapper -->
+    
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
