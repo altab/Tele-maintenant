@@ -34,17 +34,15 @@ $nombreTichetsEnAttente = $listeTicketsOperateur1 = $connexion->selectCountFromW
 	<ul class="navbar-nav ml-auto ml-md-0">
 
 		<!-- tickets alert -->
-		<li class="nav-item dropdown no-arrow mx-1"><a
-			class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
-			role="button" data-toggle="dropdown" aria-haspopup="true"
-			aria-expanded="false"> <span class="badge badge-danger mr-5"><?php if (isset($nombreTichetsEnAttente['0']['0'])) echo $nombreTichetsEnAttente['0']['0'] ?>+</span><i
-				class="fas fa-bell fa-fw"></i>
+		<li class="nav-item dropdown no-arrow mx-1"><a class="nav-link dropdown-toggle" href="#" id="alertsDropdown"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+		<?php  if (isset($nombreTichetsEnAttente['0']['0']) && $nombreTichetsEnAttente['0']['0'] != 0 ) 
+		             echo "<span class=\"badge badge-danger mr-5\">".$nombreTichetsEnAttente['0']['0'] ."</span>"; ?>
+		<i class="fas fa-bell fa-fw"></i>
 		</a>
 			<div class="dropdown-menu dropdown-menu-right p-3 minitext text-center"
 				aria-labelledby="alertsDropdown">Il y a actuellement,  
 				<kbd class="bg-info"><?php if (isset($nombreTichetsEnAttente['0']['0'])) echo $nombreTichetsEnAttente['0']['0'] ?></kbd> 
-				ticket<?php if (isset($nombreTichetsEnAttente['0']['0']) && $nombreTichetsEnAttente['0']['0'] > 1 ) echo 's' ?> en attente de
-				traitement.
+				ticket<?php if (isset($nombreTichetsEnAttente['0']['0']) && $nombreTichetsEnAttente['0']['0'] > 1 ) echo 's' ?> en attente d'attribution.
 				<a href="/page/dashboard.php" class="btn btn-primary btn-sm mt-2">Voir les tickets</a></div></li>
 
 		<!--  logout-->

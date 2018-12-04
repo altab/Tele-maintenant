@@ -60,22 +60,28 @@ $InterlocuteurModif;
             $nom =  $_GET['nomInterlocuteur'];
             $connexion->updateRaw('interlocuteur', 'nom', $nom, 'id', $InterlocuteurID);
             $warning = "L'interlocuteur a été mise à jour !";
+            $warningColor = " text-dark bg-warning ";
         }
         if (isset($_GET['prenomInterlocuteur']) && $_GET['prenomInterlocuteur']!=''){
             $connexion->updateRaw('interlocuteur', 'prenom', $_GET['prenomInterlocuteur'], 'id', $InterlocuteurID);
             $warning = "L'interlocuteur a été mise à jour !";
+            $warningColor = " text-dark bg-warning ";
         }
         if (isset($_GET['telInterlocuteur']) && $_GET['telInterlocuteur']!=''){
             $connexion->updateRaw('interlocuteur', 'telephone', $_GET['telInterlocuteur'], 'id', $InterlocuteurID);
             $warning = "L'interlocuteur a été mise à jour !";
+            $warningColor = " text-dark bg-warning ";
         }
         if (isset($_GET['emailInterlocuteur']) && $_GET['emailInterlocuteur']!=''){
             $connexion->updateRaw('interlocuteur', 'email', $_GET['emailInterlocuteur'], 'id', $InterlocuteurID);
             $warning = "L'interlocuteur a été mise à jour !";
+            $warningColor = " text-dark bg-warning ";
         }
         if (isset($_GET['societeInterlocuteur']) && $_GET['societeInterlocuteur']!=''){
             $connexion->updateRaw('interlocuteur', 'societeID', $_GET['societeInterlocuteur'], 'id', $InterlocuteurID);
-            $warning = "L'interlocuteur a été mise à jour !";}
+            $warning = "L'interlocuteur a été mise à jour !";
+            $warningColor = " text-dark bg-warning ";
+        }
         
         
         

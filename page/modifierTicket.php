@@ -72,6 +72,7 @@ if (isset($_GET['action']) && $_GET['action']=='modifierSujet') {
     
 }elseif (isset($_POST['action']) && $_POST['action']=='supprTicket'){
     
+    $connexion->deleteArrayFrom('ticketinfo', 'ticketID', $_POST['id']);
     $connexion->deleteArrayFrom('ticket', 'id', $_POST['id']);
 
     
@@ -93,7 +94,7 @@ if (isset($idTicket)) {
     $detailsTicket = $connexion -> getDetailsTicketFromId($idTicket);
     if($detailsTicket == '') $ticketExiste = false;
 
-    $ticketEnCours = new Ticket($detailsTicket[0]['id'], $detailsTicket[0]['sujet'], $detailsTicket[0]['interlocuteurID'], $detailsTicket[0]['societeID'], $detailsTicket[0]['status'], $detailsTicket[0][5],$detailsTicket[0]['utilisateurID']);
+    $ticketEnCours = new Ticket($detailsTicket[0]['id'], $detailsTicket[0]['sujet'], $detailsTicket[0]['interlocuteurID'], $detailsTicket[0]['societeID'], $detailsTicket[0]['status'], $detailsTicket[0][5],$detailsTicket[0][6]);
 
     //Affichage des details du ticket
     if($ticketExiste) {
@@ -103,7 +104,7 @@ if (isset($idTicket)) {
             else $type ="Action : ";
                     
         }
-    } else $warning = "Le ticket demandé n'existe pas !";
+    } else $warning = "Le ticket demandé à été supprimé ou n'existe pas !";
     
     
     

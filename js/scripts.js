@@ -16,11 +16,14 @@ function clearFormInterlocuteur() {
   var prenomInterlocuteur = document.querySelector("#prenomInterlocuteur");
   var telephoneInterlocuteur = document.querySelector("#telephoneInterlocuteur");
   var emailInterlocuteur = document.querySelector("#emailInterlocuteur");
+  var listeSocietes = document.querySelector('#listesociete');
 
   nomInterlocuteur.addEventListener("click", clearAll );
   prenomInterlocuteur.addEventListener("click", clearAll );
   telephoneInterlocuteur.addEventListener("click", clearAll );
   emailInterlocuteur.addEventListener("click", clearAll );
+  listeSocietes.addEventListener("click", function(){ listeSocietes.value=''; } );
+  
 }
 
 function clearAll() {
@@ -31,7 +34,7 @@ function clearAll() {
   emailInterlocuteur.value = '';
 
 }
-
+listesociete
 
 // Call the dataTables jQuery plugin
 $(document).ready(function() {

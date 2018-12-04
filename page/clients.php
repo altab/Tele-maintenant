@@ -25,7 +25,7 @@ $societeEnCours;
 $warning;
 $listeSociete=null;
 $warningColor;
-
+$tabListeSocietes;
 
 
 
@@ -130,8 +130,14 @@ if(isset($_GET['action']) && $_GET['action']=='creerSociete') {
     $tabListeSocietes = $connexion->selectFromWhere('*', 'societe', '', '');
     
 }
-foreach ($tabListeSocietes as $societe)
-    $listeSociete[] = new Societe($societe['id'], $societe['nom'], $societe['adresse'], $societe['telephone'], $societe['email']);
+
+if (isset($tabListeSocietes)) {
+    foreach ($tabListeSocietes as $societe)
+        $listeSociete[] = new Societe($societe['id'], $societe['nom'], $societe['adresse'], $societe['telephone'], $societe['email']);
+} else {
+    $warning = "Aucune société à afficher";
+    $warningColor = "bg-warning text-dark";
+}
 
 if(isset($societeEnCours)) $societeModif = $societeEnCours;
 

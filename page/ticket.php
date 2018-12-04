@@ -384,9 +384,10 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
     $sujet = $sujetEnCours->getId();
     $tabDetailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 0, 'id', 'DESC');
     
+    if (isset($tabDetailEnCours)) {
     foreach ($tabDetailEnCours as $detail)
         $detailEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
-    
+    }
     
     /*
      * Etape 4 - on ajoute le detail en base

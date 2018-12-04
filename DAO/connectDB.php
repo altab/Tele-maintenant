@@ -93,6 +93,7 @@ class connectDB {
         $preparedStatement->closeCursor();
         
     }
+   
     
     /**
      * Procedure stockée
@@ -404,6 +405,24 @@ class connectDB {
         $stmt->execute();
         $stmt->closeCursor();
         
+        
+    }
+    
+    
+    function updateUtilisateur($id, $nom, $prenom, $email, $icone, $role, $actif) {
+        
+        $pdo =  $this -> getConn();
+        $today = date('Y-m-d H:i:s');
+        
+        $preparedStatement =  $pdo -> prepare("UPDATE utilisateur SET nom=?, prenom=?,email=?, icone=?, role=?, actif=? WHERE id=$id");
+        $preparedStatement->bindParam(1, $nom);
+        $preparedStatement->bindParam(2, $prenom);
+        $preparedStatement->bindParam(3, $email);
+        $preparedStatement->bindParam(4, $icone);
+        $preparedStatement->bindParam(5, $role);
+        $preparedStatement->bindParam(6, $actif);
+        $preparedStatement->execute();
+        $preparedStatement->closeCursor();
         
     }
     

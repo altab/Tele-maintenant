@@ -42,7 +42,7 @@
 										<label class="col-4 col-form-label" for="societe"> Nom de la société :</label>
 										<div class="col-8">
 
-											<input class="form-control" list="listeSociete" id="societe" name="societe" <?php if(isset($societeEnCours))echo "value=$societeEnCours"; ?>>
+											<input class="form-control" list="listeSociete" id="listesociete" name="societe" <?php if(isset($societeEnCours))echo "value=$societeEnCours"; ?>>
 											<datalist id="listeSociete">
                                           <?php
 
@@ -169,7 +169,8 @@
 				<div class="card m-3 w-100">
 
 					<div class="card-header <?php if (isset($tabTicketsSociete) && $tabTicketsSociete != '') echo " bg-info  text-white"; else echo " bg-secondary text-dark"; ?>">
-						<i class="fas fa-fw fa-list-alt"></i> Tickets en cours
+						<i class="fas fa-fw fa-list-alt"></i> Tickets en cours 
+						<a class="btn btn-light btn-sm mr-1 float-right" href="/page/ticket.php" >Nouveau Ticket</a>
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
@@ -203,7 +204,7 @@
                              
                               	<tr>
 										<td><?php echo $ticketSociete->getId();?></td>
-										<td><?php echo $ticketSociete->dateFR();?></td>
+										<td><?php echo $ticketSociete->dateFRcourt();?></td>
 										<td><?php echo ucfirst($ticketSociete->getSujet());?></td>
 										<td><?php echo $ticketSociete->NomFromInterlocuteurID ();?></td>
 										<td><?php echo $ticketSociete->NomFromSocieteID ();?></td>
