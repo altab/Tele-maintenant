@@ -3,7 +3,7 @@
 <div class="card  h-100">
 	<div class="card-header  bg-info text-white"><i class="fas fa-industry"></i> <?php if(isset($societeModif)) echo "Modifier la société ".$societeModif->getNom()." [ID:".$societeModif->getId()."]"; else echo 'Créer une société'; ?></div>
 	<div class="card-body">
-		<form action="/page/clients.php" methode="post">
+		<form action="/page/clients.php" method="get">
 		<?php if(isset($societeModif)) echo "<input type='hidden' name='idSociete' value='".$societeModif->getID()."' />"; ?>
 			<div class="form-group">
 				<div class="input-group">

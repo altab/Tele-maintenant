@@ -26,7 +26,7 @@
         <!-- Contenu -->
         
         <div class="card">
-        	<div class="card-header bg-primary text-white"><i class="fas fa-user"></i> Liste des utilisateurs</div>
+        	<div class="card-header bg-primary text-white"><i class="fas fa-user"></i> Liste des utilisateurs [ADMINISTRATEUR : <?php echo $infosUtilisateur['nom']." ".$infosUtilisateur['prenom'];?>]</div>
         	<div class="card-body">
         		<table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
@@ -124,7 +124,7 @@
         	</div>
         </div>
         
-        <p>ICI contenu</p>
+        
         
         <!-- !Contenu -->
 		</div>

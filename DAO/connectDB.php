@@ -478,5 +478,19 @@ class connectDB {
         return $reponse;
     }
     
+    function InfoUtilisateur($id){
+        
+        $pdo =  $this -> getConn();
+        
+        $query = "CALL selectWhere($id)";
+        
+        // Prepare statement
+        $reponse = $pdo->query($query);
+        
+        $reponse =  $reponse ->fetch();
+        
+        return $reponse;
+    }
+    
 }
 ?>

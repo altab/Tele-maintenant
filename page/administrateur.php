@@ -73,5 +73,7 @@ foreach ($tabUtilisateurs as $utilisateur) {
                                             $utilisateur['actif']);
 }
 
+$infosUtilisateur = $connexion->InfoUtilisateur($_SESSION['utilisateurID']);
+
 require_once '../vues/vadministrateur.php';
 ?>

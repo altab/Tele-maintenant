@@ -87,7 +87,7 @@
 									<div class="row">
 										<label class="col-4 col-form-label" for="nom"> Nom :</label>
 										<div class="col-8">
-											<input class="form-control" list="listeNom" id="nomInterlocuteur" name="nomInterlocuteur" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getNom()."'"; ?>>
+											<input class="form-control" list="listeNom" id="NomInterlocuteur" name="nomInterlocuteur" <?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getNom()."'"; ?>>
 											<datalist id="listeNom">
                                           <?php
 
@@ -102,7 +102,7 @@
 									<div class="row my-2">
 										<label class="col-4 col-form-label" for="prenom"> Prénom :</label>
 										<div class="col-8">
-											<input class="form-control" list="listePrenom" id="prenomInterlocuteur" name="prenomInterlocuteur"
+											<input class="form-control" list="listePrenom" id="PrenomInterlocuteur" name="prenomInterlocuteur"
 												<?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getPrenom()."'"; ?>>
 											<datalist id="listePrenom">
                                           <?php
@@ -118,7 +118,7 @@
 									<div class="row my-2">
 										<label class="col-4 col-form-label" for="telephone"> Téléphone :</label>
 										<div class="col-8">
-											<input class="form-control" list="listeTelephone" id="telephoneInterlocuteur" name="telephone"
+											<input class="form-control" list="listeTelephone" id="TelephoneInterlocuteur" name="telephone"
 												<?php if(isset($interlocuteurEnCours))echo "value='".$interlocuteurEnCours->getTelephone()."'"; ?>>
 											<datalist id="listeTelephone">
                                       <?php
@@ -134,7 +134,7 @@
 									<div class="row">
 										<label class="col-4 col-form-label" for="email"> Email :</label>
 										<div class="col-8">
-											<input class="form-control" list="listeEmail" id="emailInterlocuteur" name="email" <?php if(isset($interlocuteurEnCours))echo " value='".$interlocuteurEnCours->getEmail()."'"; ?>>
+											<input class="form-control" list="listeEmail" id="EmailInterlocuteur" name="email" <?php if(isset($interlocuteurEnCours))echo " value='".$interlocuteurEnCours->getEmail()."'"; ?>>
 											<datalist id="listeEmail">
                                       <?php
 
@@ -170,7 +170,7 @@
 
 					<div class="card-header <?php if (isset($tabTicketsSociete) && $tabTicketsSociete != '') echo " bg-info  text-white"; else echo " bg-secondary text-dark"; ?>">
 						<i class="fas fa-fw fa-list-alt"></i> Tickets en cours 
-						<a class="btn btn-light btn-sm mr-1 float-right" href="/page/ticket.php" >Nouveau Ticket</a>
+						<?php if (isset($tabTicketsSociete) && $tabTicketsSociete != '') echo "<a class=\"btn btn-light btn-sm mr-1 float-right\" href=\"/page/ticket.php\" >Nouveau Ticket</a>"; ?>
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
