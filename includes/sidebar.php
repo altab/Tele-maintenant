@@ -1,7 +1,7 @@
 <div id="wrapper">
 
       <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
+	<ul id="sidebar" class="sidebar navbar-nav <?php if (isset($_COOKIE['toggled']) && $_COOKIE['toggled'] == 'true') echo 'toggled';?>">
         <li class="nav-item active">
           <a class="nav-link" href="/page/dashboard.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>

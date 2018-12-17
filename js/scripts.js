@@ -34,7 +34,6 @@ function clearAll() {
   emailInterlocuteur.value = '';
 
 }
-listesociete
 
 // Call the dataTables jQuery plugin
 $(document).ready(function() {

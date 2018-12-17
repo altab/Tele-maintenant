@@ -5,7 +5,7 @@
 
 	<?php require_once '../includes/head.php';?>
 
-    <title>Télé-Maintenant - Dashboard</title>
+    <title>Modifier un Ticket | Télé-Maintenant</title>
 
 
   </head>

@@ -426,6 +426,21 @@ class connectDB {
         
     }
     
+    function updatetoNewUtilisateur($utilisateurID, $ticketID) {
+        //
+        $pdo =  $this -> getConn();
+        
+        $query = "UPDATE ticket SET status=1,utilisateurID=$utilisateurID WHERE id=$ticketID";
+        
+        // Prepare statement
+        $stmt = $pdo->prepare($query);
+        
+        // execute the query
+        $stmt->execute();
+        $stmt->closeCursor();
+        
+    }
+    
     
     //SELECT * FROM ticket left join ticketinfo on ticket.id = ticketinfo.ticketID WHERE ticket.id=70
     function getDetailsTicketFromId($idTicket){

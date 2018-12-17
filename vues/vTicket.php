@@ -92,7 +92,7 @@
                                           <?php
 
                                         foreach ($interlocuteurs as $interlocuteur) {
-                                            echo "<option value='" . $interlocuteur->getNom() . "' label='" . $interlocuteur->getNom() . "'></option>\n";
+                                            echo "<option value='" . $interlocuteur->getNom() . "' label='" . $interlocuteur->getNom() . " " . $interlocuteur->getPrenom() . "'></option>\n";
                                         }
                                         ?>
                                         </datalist>
@@ -108,7 +108,7 @@
                                           <?php
 
                                         foreach ($interlocuteurs as $interlocuteur) {
-                                            echo "<option value='" . $interlocuteur->getPrenom() . "' label='" . $interlocuteur->getPrenom() . "'></option>\n";
+                                            echo "<option value='" . $interlocuteur->getPrenom() . "' label='" . $interlocuteur->getPrenom() . " " . $interlocuteur->getNom() . "'></option>\n";
                                         }
                                         ?>
                                         </datalist>
@@ -193,7 +193,7 @@
                              <?php
 
                     foreach ($tabTicketsSociete as $ticketSociete) {
-                        
+//                        var_dump($ticketSociete);
                         if ($ticketSociete->getStatus() == 0) {
                             $status = "Cloturé";
                         } else {
@@ -202,7 +202,7 @@
 
                         ?>
                              
-                              	<tr>
+                              	<tr <?php if($ticketSociete->getStatus() == 2) echo "class=\"text-danger font-weight-bold\" ";?>>
 										<td><?php echo $ticketSociete->getId();?></td>
 										<td><?php echo $ticketSociete->dateFRcourt();?></td>
 										<td><?php echo ucfirst($ticketSociete->getSujet());?></td>

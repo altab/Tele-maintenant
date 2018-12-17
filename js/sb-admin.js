@@ -6,8 +6,12 @@
     e.preventDefault();
     $("body").toggleClass("sidebar-toggled");
     $(".sidebar").toggleClass("toggled");
+    
+    if ( $("#sidebar").hasClass("toggled") ) $.cookie('toggled', 'true', { expires: 14 });
+    else $.cookie('toggled', 'false', { expires: 14 });
+    
   });
-
+  
   // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
   $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {
     if ($(window).width() > 768) {

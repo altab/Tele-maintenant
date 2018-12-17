@@ -28,14 +28,6 @@
                 <label for="inputPassword">Mot-de-passe</label>
               </div>
             </div>
-            <div class="form-group">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="opt" value="rmbr">
-                  Se souvenir de moi
-                </label>
-              </div>
-            </div>
             <button class="btn btn-primary btn-block" type="submit">Connexion</button>
           </form>
           <div class="text-center">

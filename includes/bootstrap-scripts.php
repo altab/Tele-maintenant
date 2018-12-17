@@ -10,8 +10,15 @@
     <script src="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>vendor/datatables/jquery.dataTables.js"></script>
     <script src="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>vendor/datatables/dataTables.bootstrap4.js"></script>
 
+
+	
+	<script src="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>js/jquery.cookie.js"></script>
+	
+	
     <!-- Custom scripts for all pages-->
-    <script src="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>js/sb-admin.min.js"></script>
+    <script src="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>js/sb-admin.js"></script>
     
     <!-- Custom scripts by Philippe Cohen-->
     <script src="<?php echo "http://" . $_SERVER['SERVER_NAME']."/"?>js/scripts.js"></script>
+    
+    

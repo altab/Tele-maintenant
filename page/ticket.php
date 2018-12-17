@@ -28,6 +28,7 @@ $connexion = new connectDB();
 
 //on recupere les societes
 $societes = $connexion->selectFromWhere('*','Societe','', '');
+$utilisateurID = $_SESSION['utilisateurID'];
 
 $interlocuteurs;
 $societeEnCours;
@@ -36,19 +37,10 @@ $sujetEnCours;
 $detailEnCours;
 $actionEnCours;
 $statusTicket;
-$utilisateurID = $_SESSION['utilisateurID'];
+$tabTicketsSociete;
 
-
-if (!isset($_GET['societe'])) {
-    $tabInterlocuteurs = $connexion->selectFromWhere('*','interlocuteur','','');
     
-    foreach ($tabInterlocuteurs as $value) {
-        
-        $interlocuteurs[] = new Interlocuteur($value['id'], $value['nom'], $value['prenom'], $value['telephone'], $value['email'], $value['societeID']);
-        
-    }
     
-}
 
 // Formulaire de recherche Société
 if (isset($_GET['societe']) && $_GET['societe'] != '') {
@@ -277,8 +269,7 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
         $tabInterlocuteurs =  $connexion->selectFromWhere('*', 'interlocuteur',  'id', $interlocuteurIdPost);
         $interlocuteurEnCours = new Interlocuteur($tabInterlocuteurs[0]['id'], $tabInterlocuteurs[0]['nom'], $tabInterlocuteurs[0]['prenom'], $tabInterlocuteurs[0]['telephone'], $tabInterlocuteurs[0]['email'], $tabInterlocuteurs[0]['societeID']);
         
-        //on recupere tous les tickets de la société
-        $tabTicketsSociete = tabTicketBySocieteByUser($societeIDPost, $interlocuteurIdPost);
+        
         
         /*
          * Etape - 2 on affiche le detail du ticket
@@ -294,8 +285,15 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
         
         
         
+        
         $queryTicketID = $connexion -> selectFromWhere('*','ticket','id', $IDTicket );
         
+        //On chage l'utilisateur
+        if ($queryTicketID[0]['status'] == 2) {
+            
+            $connexion->updatetoNewUtilisateur($utilisateurID, $ticketID);
+            $queryTicketID = $connexion -> selectFromWhere('*','ticket','id', $IDTicket );
+        }
         
         $sujetEnCours = new Ticket($queryTicketID[0]['id'],
             $queryTicketID[0]['sujet'],
@@ -307,8 +305,10 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
         
         $statusTicket = $sujetEnCours->getStatus();
         /*
-         * Etape 3 - on ajoute le detail en base
+         * Etape 3 - on ajoute le detail en base et on change l'utilisateur
          */
+        
+       
         $info =  $_GET['detail'];
         $connexion -> insertDetail(0, $info, $sujetEnCours->getId(), $utilisateurID) ;
         
@@ -327,6 +327,9 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouveauDetail') ) {
                 $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
             }
         }
+        
+        //on recupere tous les tickets de la société
+        $tabTicketsSociete = tabTicketBySocieteByUser($societeIDPost, $interlocuteurIdPost);
         
         
 }
@@ -351,8 +354,7 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
                                                 $tabInterlocuteurs[0]['email'], 
                                                 $tabInterlocuteurs[0]['societeID']);
     
-    //on recupere tous les tickets de la société
-    $tabTicketsSociete = tabTicketBySocieteByUser($societeIDPost, $interlocuteurIdPost);
+    
     
     /*
      * Etape - 2 on affiche le detail du ticket
@@ -368,6 +370,13 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
     
     $queryTicketID = $connexion -> selectFromWhere('*','ticket','id', $IDTicket );
     
+    // On change l'utilisateur
+    if ($queryTicketID[0]['status'] == 2) {
+        
+        $connexion->updatetoNewUtilisateur($utilisateurID, $ticketID);
+        $queryTicketID = $connexion -> selectFromWhere('*','ticket','id', $IDTicket );
+    }
+    
     
     $sujetEnCours = new Ticket($queryTicketID[0]['id'],
                                 $queryTicketID[0]['sujet'],
@@ -378,11 +387,20 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
                                 $queryTicketID[0]['utilisateurID']);
                             
     $statusTicket = $sujetEnCours->getStatus();
+    $sujetID = $sujetEnCours->getId();
+    
+    /*
+     * Etape 3 - on ajoute le detail en base et on change l'utilisateur
+     */
+    $info =  $_GET['actionTicket'];
+    $connexion -> insertDetail(1, $info, $sujetID, $utilisateurID) ;
+    
+    
     /*
      * Etape 3 - on recupere le detail en base
      */
-    $sujet = $sujetEnCours->getId();
-    $tabDetailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 0, 'id', 'DESC');
+    
+    $tabDetailEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujetID, 'type', 0, 'id', 'DESC');
     
     if (isset($tabDetailEnCours)) {
     foreach ($tabDetailEnCours as $detail)
@@ -395,11 +413,13 @@ elseif ((isset($_GET['action']) && $_GET['action'] == 'nouvelleAction') ) {
     $infoAction =  $_GET['actionTicket'];
     $connexion -> insertDetail(1, $infoAction, $sujetEnCours->getId(), $utilisateurID) ;
     
-    $tabActionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujet, 'type', 1 , 'id', 'DESC' );
+    $tabActionEnCours = $connexion -> selectFromWhereAndSorted('*','ticketinfo','ticketID', $sujetID, 'type', 1 , 'id', 'DESC' );
     foreach ($tabActionEnCours as $detail)
         $actionEnCours[] = new Detail($detail['id'], $detail['info'], $detail['date'], $detail['ticketID'], $detail['utilisateurID']);
         
         
+    //on recupere tous les tickets de la société
+    $tabTicketsSociete = tabTicketBySocieteByUser($societeIDPost, $interlocuteurIdPost);
     
 }
 // On Cloture le ticket
@@ -483,6 +503,41 @@ elseif ((isset($_POST['action']) && $_POST['action'] == 'changerStatusTicket') )
     $tabTicketsSociete = tabTicketBySocieteByUser($societeIDPost, $interlocuteurIdPost);
     
 }
+
+
+
+// on affiche les tickets non attribués
+//$tabTicketsSociete
+$tabTickets =  $connexion->selectFromWhereAnd('*', 'ticket', 'status', '2' , 'utilisateurID', '99999');
+
+if (isset($tabTickets) && $tabTickets !='') {
+    
+    foreach ($tabTickets as $ticket) {
+        
+        if(!isset($tabTicketsSociete)) 
+            $tabTicketsSociete[] = new Ticket($ticket['id'],
+                                            $ticket['sujet'],
+                                            $ticket['interlocuteurID'],
+                                            $ticket['societeID'],
+                                            $ticket['status'],
+                                            $ticket['date'],
+                                            $ticket['utilisateurID']);
+        
+    }
+    
+    
+    
+    
+    
+    $tabInterlocuteurs = $connexion->selectFromWhere('*','interlocuteur','','');
+    
+    foreach ($tabInterlocuteurs as $value) {
+        
+        $interlocuteurs[] = new Interlocuteur($value['id'], $value['nom'], $value['prenom'], $value['telephone'], $value['email'], $value['societeID']);
+        
+    }
+    
+} 
 
 
 
